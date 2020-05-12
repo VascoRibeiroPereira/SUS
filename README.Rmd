@@ -1,0 +1,13 @@
+---
+title: "Relatório de Contas 2020"
+author: "Vasco Pereira"
+date: "`r Sys.Date()`"
+#output: html_document
+output: md_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Relatório de Contas de 2020
