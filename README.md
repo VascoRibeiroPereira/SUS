@@ -159,6 +159,82 @@ Centros de custo e rubricas existentes - GUIDELINES
 <td style="text-align: left;">ANIVERSÁRIO SUS</td>
 <td style="text-align: left;">APOIO</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">CONSUMO ÁGUA (SMAS)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">CONSUMO ELECTRICIDADE - SUS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">CONSUMO ELECTRICIDADE - JESÉLIA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">GÁS BUTANO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">SECURITAS - ALARME</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">SEGUROS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">MANUTENÇÃO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">MATERIAL ESCRITÓRIO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">PRODUTOS DE LIMPEZA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">COMUNICAÇÕES</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">OBRAS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">DESP. BANCÁRIAS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">QUOTA - FEDERAÇÃO DAS COLECTIVIDADES</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">IMPOSTOS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">PUBLICIDADE</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">OUTROS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">ARTIGOS DECORATIVOS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">EQUIPAMENTOS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">SERVIÇO DE LIMPEZA</td>
+</tr>
 </tbody>
 </table>
 
@@ -178,3 +254,8 @@ da SUS.
             theme(plot.title = element_text(hjust = 0.5))
 
 ![](README_files/figure-markdown_strict/gasto%20e%20receita-1.png)
+
+    ## Securitas
+    grep("00026322892", contasDF$DESCRIÇÃO)
+
+    ## [1]  1 17 32 43
