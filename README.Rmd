@@ -76,5 +76,14 @@ ggplot(contasDF, aes(DATA.MOV., SALDO.CONTABILÍSTICO, IMPORTÂNCIA)) +
         labs(y = "Valor em Euros") + 
         labs(title = "Evolução Saldo e Movimentos") + 
         theme(plot.title = element_text(hjust = 0.5))
+```
+
+
+```{r adição de CC e Rubricas comuns}
+## Securitas
+grep("00026322892", contasDF$DESCRIÇÃO)
+
 
 ```
+
+
