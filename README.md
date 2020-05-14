@@ -255,6 +255,9 @@ da SUS.
 
 ![](README_files/figure-markdown_strict/gasto%20e%20receita-1.png)
 
+Rotinas de CC e Rubricas frequentes
+===================================
+
     ## Securitas
     if (sum(grepl("00026322892", contasDF$DESCRIÇÃO)) > 0) {
             contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = ifelse(grepl("00026322892", DESCRIÇÃO), "ENCARGOS COM INSTALAÇÕES", "NA"))
@@ -348,3 +351,23 @@ da SUS.
             contasDF <- mutate(contasDF, RUBRICA = 
                                        ifelse(grepl("PT50003600509910031520496", DESCRIÇÃO), "GÁS", RUBRICA))
     }
+
+Exportação em tabelas para adição de CC e Rubricas manuais
+==========================================================
+
+Como algumas despesas não são frequentes, mas sim fruto de necessidades,
+ou os fornecedores podem ser os mesmos para diferentes centros de custo
+e rúbricas, é exportado um ficheiro excel que será manualmente
+alimentado nos campos em falta pela presidencia.
+
+    # Adição de factor de mês para separar a tabela
+    contasDF <- contasDF %>% mutate(Mês = as.factor(month(contasDF$DATA.MOV.)))
+    contasDF <- contasDF[, c(8, 1:7)] # colocação do factor na coluna inicial
+
+    # Separação da tabela numa lista de tabelas por mês
+    listaMes <- split.data.frame(contasDF, contasDF$Mês)
+
+
+
+    library(openxlsx)
+    write.xlsx(listaMes, file = "./2020/tabelas_por_mes/tabelas.xlsx")

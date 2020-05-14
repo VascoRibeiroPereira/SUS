@@ -63,7 +63,7 @@ knitr::kable(ccRubri)
 ```
 
 
-# Evolução do gasto/receita e Saldo
+# Evolução do gasto/receita e Saldo   
 
 Gráfico da evolução do saldo(vermelho) e dos movimentos (azul), na conta da SUS.
 
@@ -78,6 +78,7 @@ ggplot(contasDF, aes(DATA.MOV., SALDO.CONTABILÍSTICO, IMPORTÂNCIA)) +
         theme(plot.title = element_text(hjust = 0.5))
 ```
 
+# Rotinas de CC e Rubricas frequentes   
 
 ```{r adição de CC e Rubricas comuns}
 ## Securitas
@@ -173,7 +174,23 @@ if (sum(grepl("PT50003600509910031520496", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("PT50003600509910031520496", DESCRIÇÃO), "GÁS", RUBRICA))
 }
-
 ```
 
+# Exportação em tabelas para adição de CC e Rubricas manuais   
+Como algumas despesas não são frequentes, mas sim fruto de necessidades, ou os fornecedores podem ser os mesmos para diferentes centros de custo e rúbricas, é exportado um ficheiro excel que será manualmente alimentado nos campos em falta pela presidencia.
+
+```{r exportar tabela}
+# Adição de factor de mês para separar a tabela
+contasDF <- contasDF %>% mutate(Mês = as.factor(month(contasDF$DATA.MOV.)))
+contasDF <- contasDF[, c(8, 1:7)] # colocação do factor na coluna inicial
+
+# Separação da tabela numa lista de tabelas por mês
+listaMes <- split.data.frame(contasDF, contasDF$Mês)
+
+
+
+library(openxlsx)
+write.xlsx(listaMes, file = "./2020/tabelas_por_mes/tabelas.xlsx")
+
+```
 
