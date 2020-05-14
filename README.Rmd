@@ -54,6 +54,14 @@ contasDF$SALDO.CONTABILÍSTICO <- contasDF$SALDO.CONTABILÍSTICO %>%
         as.numeric()
 ```
 
+# Automatização dos campos de Centro de Custo e Rúbricas   
+## Centros de custo e rubricas existentes - GUIDELINES
+
+```{r centros de custo e rubricas}
+ccRubi <- read.delim("./2020/CentrosdeCusto.csv", sep = ";")
+knitr::kable(ccRubi)
+```
+
 
 # Evolução do gasto/receita e Saldo
 

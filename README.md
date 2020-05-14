@@ -42,6 +42,126 @@ Tratamento de dados do banco
             str_replace_all("[,]", ".") %>%
             as.numeric()
 
+Automatização dos campos de Centro de Custo e Rúbricas
+======================================================
+
+Centros de custo e rubricas existentes - GUIDELINES
+---------------------------------------------------
+
+    ccRubi <- read.delim("./2020/CentrosdeCusto.csv", sep = ";")
+    knitr::kable(ccRubi)
+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">CENTRO.DE.CUSTO</th>
+<th style="text-align: left;">RUBRICA</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">BAR</td>
+<td style="text-align: left;">COMPRAS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BAR</td>
+<td style="text-align: left;">RECEITA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">SEG. AC. TRABALHO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">IGAC / SPA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">DONATIVO DE PORTA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">BENGALEIRO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">APOIO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">OUTROS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">BANDA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">RECEITA ATIVIDADES CONTRATADAS</td>
+<td style="text-align: left;">RECEITA ATIVIDADES CONTRATADAS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">RENDA RESTAURANTE</td>
+<td style="text-align: left;">RENDA RESTAURANTE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SÓCIOS</td>
+<td style="text-align: left;">HOMENAGENS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SÓCIOS</td>
+<td style="text-align: left;">QUOTAS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SÓCIOS</td>
+<td style="text-align: left;">DONATIVO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TEATRO UNIÃO</td>
+<td style="text-align: left;">CENÁRIO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TEATRO UNIÃO</td>
+<td style="text-align: left;">GUARDA ROUPA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TEATRO UNIÃO</td>
+<td style="text-align: left;">PUBLICIDADE</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">TEATRO UNIÃO</td>
+<td style="text-align: left;">DONATIVO DE PORTA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">TEATRO UNIÃO</td>
+<td style="text-align: left;">APOIO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATIVIDADES DIVERSAS</td>
+<td style="text-align: left;">COMPRAS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ATIVIDADES DIVERSAS</td>
+<td style="text-align: left;">RECEITA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ATIVIDADES DIVERSAS</td>
+<td style="text-align: left;">APOIO</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ANIVERSÁRIO SUS</td>
+<td style="text-align: left;">COMPRAS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ANIVERSÁRIO SUS</td>
+<td style="text-align: left;">RECEITA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ANIVERSÁRIO SUS</td>
+<td style="text-align: left;">APOIO</td>
+</tr>
+</tbody>
+</table>
+
 Evolução do gasto/receita e Saldo
 =================================
 
