@@ -169,7 +169,7 @@ Centros de custo e rubricas existentes - GUIDELINES
 </tr>
 <tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
-<td style="text-align: left;">GÁS BUTANO</td>
+<td style="text-align: left;">GÁS</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
