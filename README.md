@@ -48,8 +48,8 @@ Automatização dos campos de Centro de Custo e Rúbricas
 Centros de custo e rubricas existentes - GUIDELINES
 ---------------------------------------------------
 
-    ccRubi <- read.delim("./2020/CentrosdeCusto.csv", sep = ";")
-    knitr::kable(ccRubi)
+    ccRubri <- read.delim("./2020/CentrosdeCusto.csv", sep = ";")
+    knitr::kable(ccRubri)
 
 <table>
 <thead>
@@ -165,9 +165,16 @@ Centros de custo e rubricas existentes - GUIDELINES
 Evolução do gasto/receita e Saldo
 =================================
 
+Gráfico da evolução do saldo(vermelho) e dos movimentos (azul), na conta
+da SUS.
+
     library(ggplot2)
     ggplot(contasDF, aes(DATA.MOV., SALDO.CONTABILÍSTICO, IMPORTÂNCIA)) + 
             geom_line(aes(DATA.MOV., SALDO.CONTABILÍSTICO),color = "red") +
-            geom_line(aes(DATA.MOV., IMPORTÂNCIA),color = "blue")
+            geom_line(aes(DATA.MOV., IMPORTÂNCIA),color = "blue") +
+            labs(x = "Data") + 
+            labs(y = "Valor em Euros") + 
+            labs(title = "Evolução Saldo e Movimentos") + 
+            theme(plot.title = element_text(hjust = 0.5))
 
 ![](README_files/figure-markdown_strict/gasto%20e%20receita-1.png)
