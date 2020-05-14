@@ -6,27 +6,7 @@ Tratamento de dados do banco
 
     ## Carregamento de bibliotecas
     library(dplyr)
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
     library(lubridate)
-
-    ## 
-    ## Attaching package: 'lubridate'
-
-    ## The following object is masked from 'package:base':
-    ## 
-    ##     date
-
     library(stringr)
 
     ## Extracção dos dados
@@ -37,46 +17,6 @@ Tratamento de dados do banco
     for (i in 1:length(dataFiles)){
             contasDF <- contasDF %>% bind_rows(read.delim(dataFiles[i], sep = ";"))
     }
-
-    ## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): Unequal factor levels: coercing to character
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
-
-    ## Warning in bind_rows_(x, .id): binding character and factor vector, coercing
-    ## into character vector
 
     ## Conversão para formato de data
     tempDateMOV <- dmy(contasDF$DATA.MOV.[1:42])
