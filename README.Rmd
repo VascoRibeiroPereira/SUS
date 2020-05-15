@@ -8,6 +8,12 @@ output: md_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+### Listas de tarefas
+1. Criar rubricas detalhadas no cc Noite das Camélias
+  - por exemplo: Artigos Decorativos; Rama; Camélia; Cenário
+2. Substituir ao máximo os campos "Outros" de todas das rúbricas
+3. Adicionar "ANUIDADE" a CC "ENCARGOS COM INSTALAÇÕES" e Rúbrica "DESP. BANCÁRIAS" no código
+
 # Repositório da tesouraria da SUS   
 Este repositório serve para tratamento dos dados e gerar relatórios de contas a apresentar nas reuniões de direção e na Assembleia.   
 
