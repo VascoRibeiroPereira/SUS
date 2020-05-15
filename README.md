@@ -1,3 +1,13 @@
+### Listas de tarefas
+
+1.  Criar rubricas detalhadas no cc Noite das Camélias
+
+-   por exemplo: Artigos Decorativos; Rama; Camélia; Cenário
+
+1.  Substituir ao máximo os campos “Outros” de todas das rúbricas
+2.  Adicionar “ANUIDADE” a CC “ENCARGOS COM INSTALAÇÕES” e Rúbrica
+    “DESP. BANCÁRIAS” no código
+
 Repositório da tesouraria da SUS
 ================================
 
@@ -29,6 +39,14 @@ programação.
 <tr class="even">
 <td style="text-align: left;">BAR</td>
 <td style="text-align: left;">RECEITA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BAR</td>
+<td style="text-align: left;">EQUIPAMENTOS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">BAR MANUTENÇÃO</td>
+<td style="text-align: left;">EQUIPAMENTOS</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
@@ -197,6 +215,22 @@ programação.
 <tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">SERVIÇO DE LIMPEZA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+<td style="text-align: left;">ALIMENTAÇÃO</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+<td style="text-align: left;">COMBUSTÍVEL</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+<td style="text-align: left;">OUTROS</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EQUIPAMENTOS</td>
+<td style="text-align: left;">EQUIPAMENTO JARDIM</td>
 </tr>
 </tbody>
 </table>
