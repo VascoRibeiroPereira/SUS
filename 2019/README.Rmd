@@ -19,9 +19,7 @@ library(lubridate)
 library(stringr)
 
 ## Extracção dos dados
-dataFiles <- list.files("./2019/extratos", pattern = "csv$", full.names = TRUE)
-
-contasDF <- read_delim("./2019/extratos/complete2019.csv", sep = ";")
+contasDF <- read.delim("./extratos/complete2019.csv", sep = ";")
 contasDF <- as_tibble(contasDF)
 
 
@@ -34,15 +32,6 @@ contasDF$DATA.VALOR <- ymd(contasDF$DATA.VALOR)
 contasDF$DESCRIÇÃO <- as.character(contasDF$DESCRIÇÃO)
 
 ```
-
-# Automatização dos campos de Centro de Custo e Rúbricas   
-## Centros de custo e rubricas existentes - GUIDELINES
-
-```{r centros de custo e rubricas}
-ccRubri <- read.delim("./2020/CentrosdeCusto.csv", sep = ";")
-knitr::kable(ccRubri)
-```
-
 
 # Evolução do gasto/receita e Saldo   
 
@@ -168,10 +157,10 @@ contasDF <- contasDF[, c(8, 1:7)] # colocação do factor na coluna inicial
 # Separação da tabela numa lista de tabelas por mês
 listaMes <- split.data.frame(contasDF, contasDF$Mês)
 
-if (dir.exists("./2019/tabelas_por_mes") == FALSE) dir.create("./2019/tabelas_por_mes")
+if (dir.exists("./tabelas_por_mes") == FALSE) dir.create("./tabelas_por_mes")
 
 library(openxlsx)
-write.xlsx(listaMes, file = "./2019/tabelas_por_mes/tabelas.xlsx")
+write.xlsx(listaMes, file = "./tabelas_por_mes/tabelas.xlsx")
 
 ```
 
