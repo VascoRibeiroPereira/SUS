@@ -1,26 +1,5 @@
-    library(dplyr)
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-    library(ggplot2)
-    library(openxlsx)
-
 Centros de Custo e Rubricas Associadas
 ======================================
-
-    setwd("/Users/vascoalbertofiliperibeiro/R/SUS")
-    ccRubri <- read.delim("./CentrosdeCusto.csv", sep = ";")
-    ccRubri <- ccRubri %>% arrange(CENTRO.DE.CUSTO)
-    knitr::kable(ccRubri)
 
 <table>
 <thead>
@@ -240,19 +219,7 @@ Centros de Custo e Rubricas Associadas
 Balanço de Atividades por Centro de Custo
 =========================================
 
-    dados2019 <- tibble()
-    setwd("/Users/vascoalbertofiliperibeiro/R/SUS")
-    for (i in 1:12) {
-            dadosTMP <- read.xlsx("./2019/tabelas_por_mes/tabelas_Final.xlsx", 
-                                  sheet = i, detectDates = TRUE)
-            dados2019 <- bind_rows(dados2019, dadosTMP)
-    }
-
 O Balanço Anual por Centro de Custo está apresentado na tabela seguinte:
-
-    dados2019_by_CC <- dados2019 %>% group_by(CENTRO.DE.CUSTO)
-    balancoAnualCC <- dados2019_by_CC %>% summarise(Valores = sum(IMPORTÂNCIA))
-    knitr::kable(balancoAnualCC)
 
 <table>
 <thead>
@@ -315,10 +282,6 @@ Balanço de Atividades por Rubrica
 De uma forma mais clara, demonstra-se na seguinte tabela como é que cada
 rúbrica influencia a tendencia de cada centro de custo positiva ou
 negativamente.
-
-    dados2019_by_CC_Rubri <- dados2019 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
-    balancoAnualCC_Rubri <- dados2019_by_CC_Rubri %>% summarise(Valores = sum(IMPORTÂNCIA))
-    knitr::kable(balancoAnualCC_Rubri)
 
 <table>
 <thead>
