@@ -272,9 +272,9 @@ O Balanço Anual por Centro de Custo está apresentado na tabela seguinte:
 </tbody>
 </table>
 
-A soma de todos os valores, por Centro de Custo é de -1.1931710^{4}€,
-sendo este valor negativo devido à perda da principal fonte de
-rendimento da Sociedade União Sontrense: o aluguer do andar inferior.
+A soma de todos os valores, por Centro de Custo é de -11931€, sendo este
+valor negativo devido à perda da principal fonte de rendimento da
+Sociedade União Sontrense: o aluguer do andar inferior.
 
 Balanço de Atividades por Rubrica
 ---------------------------------
