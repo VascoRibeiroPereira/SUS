@@ -148,7 +148,7 @@ alimentado nos campos em falta pela presidencia.
     # Separação da tabela numa lista de tabelas por mês
     listaMes <- split.data.frame(contasDF, contasDF$Mês)
 
-    if (dir.exists("./tabelas_por_mes") == FALSE) dir.create("./tabelas_por_mes")
+    #if (dir.exists("./tabelas_por_mes") == FALSE) dir.create("./tabelas_por_mes")
 
-    library(openxlsx)
-    write.xlsx(listaMes, file = "./tabelas_por_mes/tabelas.xlsx")
+    #library(openxlsx)
+    #write.xlsx(listaMes, file = "./tabelas_por_mes/tabelas.xlsx")

@@ -19,7 +19,7 @@ library(lubridate)
 library(stringr)
 
 ## Extracção dos dados
-contasDF <- read.delim("./extratos/complete2019.csv", sep = ";")
+contasDF <- read.delim("./2019/extratos/complete2019.csv", sep = ";")
 contasDF <- as_tibble(contasDF)
 
 
