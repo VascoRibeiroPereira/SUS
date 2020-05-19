@@ -58,3 +58,16 @@ balancoAnualCC_Rubri <- dados2019_by_CC_Rubri %>% summarise(Valores = sum(IMPORT
 knitr::kable(balancoAnualCC_Rubri)
 ```
 
+# Balanço de Impacto Comparativo entre Centros de Custo   
+
+
+```{r Gráfico Balanço Anual por CC}
+
+ggplot(balancoAnualCC, aes(fill = CENTRO.DE.CUSTO, y = Valores, x = CENTRO.DE.CUSTO)) + 
+        geom_bar(position="dodge", stat="identity") +
+        theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank())
+
+```
+

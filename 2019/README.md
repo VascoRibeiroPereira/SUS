@@ -243,29 +243,25 @@ O Balanço Anual por Centro de Custo está apresentado na tabela seguinte:
 </tr>
 <tr class="even">
 <td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
-<td style="text-align: right;">-308.75</td>
+<td style="text-align: right;">-332.75</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM COLABORADRES</td>
-<td style="text-align: right;">-24.00</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: right;">-11635.09</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">EQUIPAMENTOS</td>
 <td style="text-align: right;">-388.99</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: right;">-1641.77</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">SÓCIOS</td>
 <td style="text-align: right;">577.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: right;">-381.47</td>
 </tr>
@@ -330,7 +326,7 @@ negativamente.
 <tr class="even">
 <td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
 <td style="text-align: left;">ALIMENTAÇÃO</td>
-<td style="text-align: right;">-211.78</td>
+<td style="text-align: right;">-235.78</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
@@ -343,159 +339,159 @@ negativamente.
 <td style="text-align: right;">-29.00</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM COLABORADRES</td>
-<td style="text-align: left;">ALIMENTAÇÃO</td>
-<td style="text-align: right;">-24.00</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">ACTIVIDADES VÁRIAS</td>
 <td style="text-align: right;">-139.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">ALUGUER EXTINTORES</td>
 <td style="text-align: right;">-354.24</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">ARTIGOS DECORATIVOS</td>
 <td style="text-align: right;">-456.78</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">CERTIDÕES E DECLARAÇÕES</td>
 <td style="text-align: right;">-340.94</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">COMUNICAÇÕES</td>
 <td style="text-align: right;">-790.81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">CONSUMO ÁGUA (SMAS)</td>
 <td style="text-align: right;">-213.35</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">CONSUMO ELECTRICIDADE</td>
 <td style="text-align: right;">-1829.10</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">DESP. BANCÁRIAS</td>
 <td style="text-align: right;">-46.80</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">EQUIPAMENTOS</td>
 <td style="text-align: right;">-149.01</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">GÁS</td>
 <td style="text-align: right;">-182.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">IMPOSTOS</td>
 <td style="text-align: right;">-540.54</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">MANUTENÇÃO / OBRAS</td>
 <td style="text-align: right;">-1611.09</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">MANUTENÇÃO/OBRAS</td>
 <td style="text-align: right;">-1520.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">MATERIAL ESCRITÓRIO</td>
 <td style="text-align: right;">-164.51</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">OUTROS</td>
 <td style="text-align: right;">-832.08</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">PRODUTOS DE LIMPEZA</td>
 <td style="text-align: right;">-382.17</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">SECURITAS - ALARME</td>
 <td style="text-align: right;">-594.48</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">SEGUROS</td>
 <td style="text-align: right;">-674.49</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
 <td style="text-align: left;">SERVIÇO DE LIMPEZA</td>
 <td style="text-align: right;">-813.70</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">EQUIPAMENTOS</td>
 <td style="text-align: left;">EQUIPAMENTO JARDIM</td>
 <td style="text-align: right;">-388.99</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">BANDA</td>
 <td style="text-align: right;">-500.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">BENGALEIRO</td>
 <td style="text-align: right;">120.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">DONATIVO DE PORTA</td>
 <td style="text-align: right;">290.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">IGAC / SPA</td>
 <td style="text-align: right;">-37.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">OUTROS</td>
 <td style="text-align: right;">-1514.77</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">SÓCIOS</td>
 <td style="text-align: left;">DONATIVO</td>
 <td style="text-align: right;">700.00</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">SÓCIOS</td>
 <td style="text-align: left;">HOMENAGENS</td>
 <td style="text-align: right;">-123.00</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">CENÁRIO</td>
 <td style="text-align: right;">-463.63</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">DONATIVO DE PORTA</td>
 <td style="text-align: right;">703.30</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">GUARDA ROUPA</td>
 <td style="text-align: right;">-621.14</td>
 </tr>
 </tbody>
 </table>
+
+Balanço de Impacto Comparativo entre Centros de Custo
+=====================================================
+
+![](README_files/figure-markdown_strict/Gráfico%20Balanço%20Anual%20por%20CC-1.png)
