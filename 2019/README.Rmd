@@ -35,7 +35,11 @@ for (i in 1:12) {
                               sheet = i, detectDates = TRUE)
         dados2019 <- bind_rows(dados2019, dadosTMP)
 }
+saldo2018 <- as.integer(dados2019$SALDO.CONTABILÍSTICO[1] +
+                                abs(dados2019$IMPORTÂNCIA[1]))
 ```
+
+A SUS iniciou a actividade em 2019 com um saldo de `r saldo2018`€.
 
 O Balanço Anual por Centro de Custo está apresentado na tabela seguinte:
 
@@ -43,10 +47,22 @@ O Balanço Anual por Centro de Custo está apresentado na tabela seguinte:
 
 dados2019_by_CC <- dados2019 %>% group_by(CENTRO.DE.CUSTO)
 balancoAnualCC <- dados2019_by_CC %>% summarise(Valores = sum(IMPORTÂNCIA))
+gasto2019 <- as.integer(sum(balancoAnualCC$Valores))
 knitr::kable(balancoAnualCC)
 ```
 
-A soma de todos os valores, por Centro de Custo é de `r as.integer(sum(balancoAnualCC$Valores))`€, sendo este valor negativo devido à perda da principal fonte de rendimento da Sociedade União Sontrense: o aluguer do andar inferior.   
+A soma de todos os valores, por Centro de Custo é de `r gasto2019`€, sendo este valor negativo devido à perda da principal fonte de rendimento da Sociedade União Sontrense: o aluguer do andar inferior.   
+Este rendimento negativo provocou uma forte descida nas contas da sociedade entre 2018 e 2019:   
+
+```{r relação 2018-2019}
+saldo2019 <- saldo2018 + gasto2019
+
+tabelaRendimentos <- tibble(Conta2018 = saldo2018, 
+                            Conta2019 = saldo2019, 
+                            Variação = saldo2019-saldo2018)
+
+knitr::kable(tabelaRendimentos)
+```
 
 ## Balanço de Atividades por Rubrica   
 
@@ -70,4 +86,6 @@ ggplot(balancoAnualCC, aes(fill = CENTRO.DE.CUSTO, y = Valores, x = CENTRO.DE.CU
         axis.ticks.x=element_blank())
 
 ```
+
+
 

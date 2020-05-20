@@ -219,6 +219,8 @@ Centros de Custo e Rubricas Associadas
 Balanço de Atividades por Centro de Custo
 =========================================
 
+A SUS iniciou a actividade em 2019 com um saldo de 17130€.
+
 O Balanço Anual por Centro de Custo está apresentado na tabela seguinte:
 
 <table>
@@ -270,7 +272,26 @@ O Balanço Anual por Centro de Custo está apresentado na tabela seguinte:
 
 A soma de todos os valores, por Centro de Custo é de -11931€, sendo este
 valor negativo devido à perda da principal fonte de rendimento da
-Sociedade União Sontrense: o aluguer do andar inferior.
+Sociedade União Sontrense: o aluguer do andar inferior.  
+Este rendimento negativo provocou uma forte descida nas contas da
+sociedade entre 2018 e 2019:
+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Conta2018</th>
+<th style="text-align: right;">Conta2019</th>
+<th style="text-align: right;">Variação</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">17130</td>
+<td style="text-align: right;">5199</td>
+<td style="text-align: right;">-11931</td>
+</tr>
+</tbody>
+</table>
 
 Balanço de Atividades por Rubrica
 ---------------------------------
