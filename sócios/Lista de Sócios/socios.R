@@ -50,8 +50,12 @@ listaSocios <- arrange(listaSocios, Admissão)
 
 listaSocios$Nº.Sócio <- 1:length(listaSocios$Nº.Sócio)
 
+
+
+
+
 ## Compilação para tabela exterior
-write.xlsx(listaSocios, file = "./sócios/listaSocios.xlsx")
+## write.xlsx(listaSocios, file = "./sócios/listaSocios.xlsx")
 
 
 

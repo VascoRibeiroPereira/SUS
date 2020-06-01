@@ -2,8 +2,9 @@
 title: "BALANÇO ACTIVIDADES - EXERCICIO 2019"
 author: "Vasco Pereira"
 date: "`r Sys.Date()`"
-output: md_document
-  #pdf_document: default
+#output: md_document
+output: 
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -107,4 +108,7 @@ rendimentos2019 <- rendimentos2019[,c(2,1,3)]
 knitr::kable(rendimentos2019)
 knitr::kable(gastos2019)
 ```
+
+
+
 
