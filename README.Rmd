@@ -3,6 +3,7 @@ title: "Contas SUS"
 author: "Vasco Pereira"
 #output: html_document
 output: md_document
+Last update: "Sys.date()"
 ---
 
 ```{r setup, include=FALSE}
@@ -12,13 +13,15 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Criar rubricas detalhadas no cc Noite das Camélias
   - por exemplo: Artigos Decorativos; Rama; Camélia; Cenário
 2. Substituir ao máximo os campos "Outros" de todas das rúbricas
-3. Adicionar "ANUIDADE" a CC "ENCARGOS COM INSTALAÇÕES" e Rúbrica "DESP. BANCÁRIAS" no código
+3. Substitui CC "ENCARGOS COM INSTALAÇÔES" e adicionar Rubrica "Renda"
+4. Remover CC renda restaurante
 
 # Repositório da tesouraria da SUS   
 Este repositório serve para tratamento dos dados e gerar relatórios de contas a apresentar nas reuniões de direção e na Assembleia.   
 
 # Centros de Custo   
 Os centros de custo podem ser adaptados conforme as necessidades mediante diálogo com o tesoureiro de forma a facilitar o ajuste da programação.   
+Nota: 
 
 ```{r centros de custo e rubricas}
 ccRubri <- read.delim("CentrosdeCusto.csv", sep = ";")

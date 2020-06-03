@@ -5,8 +5,8 @@
 -   por exemplo: Artigos Decorativos; Rama; Camélia; Cenário
 
 1.  Substituir ao máximo os campos “Outros” de todas das rúbricas
-2.  Adicionar “ANUIDADE” a CC “ENCARGOS COM INSTALAÇÕES” e Rúbrica
-    “DESP. BANCÁRIAS” no código
+2.  Substitui CC “ENCARGOS COM INSTALAÇÔES” e adicionar Rubrica “Renda”
+3.  Remover CC renda restaurante
 
 Repositório da tesouraria da SUS
 ================================
@@ -19,7 +19,8 @@ Centros de Custo
 
 Os centros de custo podem ser adaptados conforme as necessidades
 mediante diálogo com o tesoureiro de forma a facilitar o ajuste da
-programação.
+programação.  
+Nota:
 
     ccRubri <- read.delim("CentrosdeCusto.csv", sep = ";")
     knitr::kable(ccRubri)
@@ -45,77 +46,85 @@ programação.
 <td style="text-align: left;">EQUIPAMENTOS</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">BAR MANUTENÇÃO</td>
-<td style="text-align: left;">EQUIPAMENTOS</td>
+<td style="text-align: left;">BAR</td>
+<td style="text-align: left;">MANUTENÇÃO / EQUIPAMENTOS</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">BAR</td>
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">SEG. AC. TRABALHO</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">IGAC / SPA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">DONATIVO DE PORTA</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">BENGALEIRO</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">APOIO</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">OUTROS</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
 <td style="text-align: left;">BANDA</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">NOITE DAS CAMÉLIAS</td>
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+</tr>
 <tr class="even">
-<td style="text-align: left;">RECEITA ATIVIDADES CONTRATADAS</td>
+<td style="text-align: left;">ATIVIDADES CONTRATADAS</td>
 <td style="text-align: left;">RECEITA ATIVIDADES CONTRATADAS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">RENDA RESTAURANTE</td>
-<td style="text-align: left;">RENDA RESTAURANTE</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">SÓCIOS</td>
 <td style="text-align: left;">HOMENAGENS</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">SÓCIOS</td>
 <td style="text-align: left;">QUOTAS</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">SÓCIOS</td>
 <td style="text-align: left;">DONATIVO</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">CENÁRIO</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">GUARDA ROUPA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">PUBLICIDADE</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">DONATIVO DE PORTA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">TEATRO UNIÃO</td>
 <td style="text-align: left;">APOIO</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">TEATRO UNIÃO</td>
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+</tr>
 <tr class="even">
 <td style="text-align: left;">ATIVIDADES DIVERSAS</td>
 <td style="text-align: left;">COMPRAS</td>
@@ -129,108 +138,116 @@ programação.
 <td style="text-align: left;">APOIO</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">ATIVIDADES DIVERSAS</td>
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">ANIVERSÁRIO SUS</td>
 <td style="text-align: left;">COMPRAS</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ANIVERSÁRIO SUS</td>
 <td style="text-align: left;">RECEITA</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ANIVERSÁRIO SUS</td>
 <td style="text-align: left;">APOIO</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">ANIVERSÁRIO SUS</td>
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
+</tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">CONSUMO ÁGUA (SMAS)</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">CONSUMO ELECTRICIDADE</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">GÁS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">SECURITAS - ALARME</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">SEGUROS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">MATERIAL ESCRITÓRIO</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">PRODUTOS DE LIMPEZA</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">COMUNICAÇÕES</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">MANUTENÇÃO / OBRAS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
-<td style="text-align: left;">DESP. BANCÁRIAS</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
-<td style="text-align: left;">QUOTA - FEDERAÇÃO DAS COLECTIVIDADES</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">IMPOSTOS</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">PUBLICIDADE</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">OUTROS</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">ARTIGOS DECORATIVOS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">EQUIPAMENTOS</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">ACTIVIDADES VÁRIAS</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">ALUGUER EXTINTORES</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM INSTALAÇÕES</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">SERVIÇO DE LIMPEZA</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
-<td style="text-align: left;">ALIMENTAÇÃO</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
+<td style="text-align: left;">DESP. BANCÁRIAS</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
-<td style="text-align: left;">COMBUSTÍVEL</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
+<td style="text-align: left;">QUOTA - FEDERAÇÃO DAS COLECTIVIDADES</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
-<td style="text-align: left;">OUTROS</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
+<td style="text-align: left;">CERTIDÕES E DECLARAÇÕES</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">EQUIPAMENTOS</td>
-<td style="text-align: left;">EQUIPAMENTO JARDIM</td>
+<td style="text-align: left;">INSTALAÇÕES</td>
+<td style="text-align: left;">JARDIM</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">INSTALAÇÕES</td>
+<td style="text-align: left;">RENDA</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">INSTALAÇÕES</td>
+<td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
 </tr>
 </tbody>
 </table>
