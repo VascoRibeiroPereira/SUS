@@ -28,13 +28,13 @@ contasDF$SALDO.CONTABILÍSTICO <- contasDF$SALDO.CONTABILÍSTICO %>%
 
 ## Securitas
 if (sum(grepl("00026322892", contasDF$DESCRIÇÃO)) > 0) {
-        contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = ifelse(grepl("00026322892", DESCRIÇÃO), "ENCARGOS COM INSTALAÇÕES", "NA"))
+        contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = ifelse(grepl("00026322892", DESCRIÇÃO), "INSTALAÇÕES", "NA"))
         contasDF <- mutate(contasDF, RUBRICA = ifelse(grepl("00026322892", DESCRIÇÃO), "SECURITAS - ALARME", "NA"))
 }
 
 #SMAS
 if (sum(grepl("96611566046", contasDF$DESCRIÇÃO)) > 0) {
-        contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = ifelse(grepl("96611566046", DESCRIÇÃO), "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+        contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = ifelse(grepl("96611566046", DESCRIÇÃO), "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = ifelse(grepl("96611566046", DESCRIÇÃO), "CONSUMO ÁGUA (SMAS)", RUBRICA))
 }
 
@@ -42,7 +42,7 @@ if (sum(grepl("96611566046", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("I.SELO|COMISSÃO MANUTENÇÃO", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("I.SELO|COMISSÃO MANUTENÇÃO", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("I.SELO|COMISSÃO MANUTENÇÃO", DESCRIÇÃO), "DESP. BANCÁRIAS", RUBRICA))
 }
@@ -51,7 +51,7 @@ if (sum(grepl("I.SELO|COMISSÃO MANUTENÇÃO", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("00531446107", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("00531446107", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("00531446107", DESCRIÇÃO), "COMUNICAÇÕES", RUBRICA))
 }
@@ -60,7 +60,7 @@ if (sum(grepl("00531446107", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("10367661", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("10367661", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("10367661", DESCRIÇÃO), "ALUGUER EXTINTORES", RUBRICA))
 }
@@ -70,7 +70,7 @@ if (sum(grepl("10367661", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("P05100001520", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("P05100001520", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("P05100001520", DESCRIÇÃO), "CONSUMO ELECTRICIDADE", RUBRICA))
 }
@@ -79,7 +79,7 @@ if (sum(grepl("P05100001520", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("11034", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("11034", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("11034", DESCRIÇÃO), "SEGUROS", RUBRICA))
 }
@@ -88,7 +88,7 @@ if (sum(grepl("11034", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("PT50000700000032524109823", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("PT50000700000032524109823", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("PT50000700000032524109823", DESCRIÇÃO), "SERVIÇO DE LIMPEZA", RUBRICA))
 }
@@ -97,7 +97,7 @@ if (sum(grepl("PT50000700000032524109823", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("PT50003501810000046033029", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("PT50003501810000046033029", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("PT50003501810000046033029", DESCRIÇÃO), "MANUTENÇÃO/OBRAS", RUBRICA))
 }
@@ -115,7 +115,7 @@ if (sum(grepl("PT50003300000000812850405", contasDF$DESCRIÇÃO)) > 0) {
 if (sum(grepl("PT50003600509910031520496", contasDF$DESCRIÇÃO)) > 0) {
         contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
                                    ifelse(grepl("PT50003600509910031520496", DESCRIÇÃO), 
-                                          "ENCARGOS COM INSTALAÇÕES", CENTRO.DE.CUSTO))
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("PT50003600509910031520496", DESCRIÇÃO), "GÁS", RUBRICA))
 }
