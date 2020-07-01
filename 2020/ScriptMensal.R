@@ -3,12 +3,16 @@ library(dplyr)
 library(lubridate)
 library(stringr)
 
-## Extracção dos dados
-dataFiles <- list.files("./2020/extratos", pattern = "csv$", full.names = TRUE)
+## Extracção dos dados total
+#dataFiles <- list.files("./2020/extratos", pattern = "csv$", full.names = TRUE)
 
-contasDF <- read.delim(dataFiles[length(dataFiles)], sep = ";")
-contasDF <- as_tibble(contasDF)
+#contasDF <- read.delim(dataFiles[length(dataFiles)], sep = ";")
+#contasDF <- as_tibble(contasDF)
 
+## Extração dos dados mês a mês - Correntemente em uso (03/2020)
+
+contasDF <- read.delim("./extratos/Net24_MovConta_050100010730_20200601_20200630.csv", 
+                       sep = ";")
 
 ## Conversão para formato de data
 contasDF$DATA.MOV. <- ymd(contasDF$DATA.MOV.)
@@ -126,8 +130,9 @@ contasDF <- contasDF[, c(8, 1:7)] # colocação do factor na coluna inicial
 
 
 library(openxlsx)
-write.xlsx(contasDF, file = paste("./2020/tabelas_por_mes/", 
+write.xlsx(contasDF, file = paste("./tabelas_por_mes/", 
                                   month(month(Sys.time())-1, label = TRUE),".xlsx", sep=""))
 
 
-
+# setwd("~/R/SUS/2020")
+# source("ScriptMensal.R", echo = TRUE)
