@@ -1,3 +1,18 @@
+Tratamento de dados mensal
+==========================
+
+1.  Entrar no site Montepio  
+2.  Contas à Ordem  
+3.  Movimentos  
+4.  Pesquisa de Movimentos  
+5.  Selecionar do dia 1 ao último dia do mês em análise  
+6.  Consultar  
+7.  Carregar no simbolo de download (descarrega um `.xls`)  
+8.  Colocar o ficheiro na pasta “OriginaisExcel”  
+9.  Manualmente editar a tabela no software Numbers para só ter o o nome
+    das colunas de interesse e guardar como `.csv` na pasta “extratos”  
+10. Correr o script “ScriptMensal.R”
+
 ### Listas de tarefas
 
 1.  Criar rubricas detalhadas no cc Noite das Camélias
