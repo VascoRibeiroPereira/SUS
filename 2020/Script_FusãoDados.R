@@ -41,7 +41,7 @@ write.xlsx(contas2020, "./2020/contas2020.xlsx")
 ### The future
 contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/April.xlsx"))
 contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/May.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/June.xlsx"))
+contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/Jun.xlsx"))
 contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/Jully.xlsx"))
 contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/August.xlsx"))
 contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/September.xlsx"))
