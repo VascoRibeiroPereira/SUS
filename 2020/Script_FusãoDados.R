@@ -11,17 +11,12 @@ contas2020_JAN_APR <- tibble()
 
 for (n in 1:4){
         contas2020_JAN_APR <- contas2020_JAN_APR %>% 
-                bind_rows(read.xlsx("./2020/tabelas_por_mes/tabelas_Jan_to_Apr.xlsx", sheet = n, detectDates = TRUE))    
+                bind_rows(read.xlsx("./tabelas_por_mes/tabelas_Jan_to_Apr.xlsx", sheet = n, detectDates = TRUE))    
 }
 
-####################MAY NOW ANALYSING###################
-
-contas2020_JAN_APR <- contas2020_JAN_APR %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/May.xlsx", detectDates = TRUE))
-
-
-########################################################
-
 contas2020 <- contas2020_JAN_APR
+
+rm(contas2020_JAN_APR)
 
 ## Correcção do CC ENCARGOS COM INSTALAÇÕES E COLABORADORES
 
@@ -35,24 +30,11 @@ contas2020$RUBRICA <- gsub("ALIMENTAÇÃO",
                                    "ENCARGOS COM COLABORADORES", contas2020$RUBRICA)
 
 
-write.xlsx(contas2020, "./2020/contas2020.xlsx")
+# Merging next months
+contas2020 <- contas2020 %>% bind_rows(read.xlsx("./tabelas_por_mes/May.xlsx", detectDates = TRUE))
+contas2020 <- contas2020 %>% bind_rows(read.xlsx("./tabelas_por_mes/Jun.xlsx", detectDates = TRUE))
+contas2020 <- contas2020 %>% bind_rows(read.xlsx("./tabelas_por_mes/Jul.xlsx", detectDates = TRUE))
 
-
-### The future
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/April.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/May.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/Jun.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/Jully.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/August.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/September.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/October.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/November.xlsx"))
-contas2020 <- contas2020 %>% bind_rows(read.xlsx("./2020/tabelas_por_mes/December.xlsx"))
-
-
-
-
-
-
-
+# Exportação dos dados completos
+write.xlsx(contas2020, "./contas2020.xlsx")
 

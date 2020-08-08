@@ -1,0 +1,100 @@
+---
+title: | 
+        | "Relatório de Despesas da Sociedade União Sintrense - 2020"
+        | Requerido pela refª 1054/2020-PS
+author: |
+        | "Vasco Pereira" - Tesoureiro da SUS
+        | "Ricardo Pereira" - Presidente da SUS
+        | sociedadeuniaosintrense@gmail.com
+date: "8/8/2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE)
+```
+
+## Resumo
+
+O presente documento sumariza as despesas correntes realizadas pela Sociedade União Sintrense desde o inicio do ano de 2020, em resposta à comunicação dos serviços administrativos da União das Freguesias de Sintra: "Pedido de documentação de apoio ao subsídio atribuído no âmbito da suspensão do Apoio ao Associativismo", com a refª 1054/2020-PS, datado de 05 de agosto.
+
+Dado que é pedida uma relação de despesas até ao dia 31 de Dezembro do corrente ano, as despesas ainda não realizadas foram calculadas por extrapolação dos dados existentes.
+
+As **Tabelas 3 e 4** sumarizam os dados requeridos na comunicação supracitada.   
+
+## Despesas correntes
+
+À data da realização do presente documento sumarizam-se as despesas correntes, com periodicidade mensal, na **Tabela 1**.   
+As despesas relativas a "Certidões e Declarações" e "Seguros" foram fixas e não se espera mais gastos nestas rúbricas até ao final do ano, sendo estas descritas na **Tabela 2**.   
+
+**Tabela 1** *- Soma das despesas mensais correntes entre Janeiro e Julho por Rúbrica*
+```{r importar dados existentes e calculo de despesas mensais}
+library(openxlsx)
+library(dplyr)
+
+contas2020 <- tibble()
+        contas2020 <- contas2020 %>% 
+                bind_rows(read.xlsx("./contas2020.xlsx", detectDates = TRUE))
+
+gastos2020 <- contas2020 %>% filter(IMPORTÂNCIA < 0, 
+                                    CENTRO.DE.CUSTO != "TEATRO UNIÃO",
+                                    CENTRO.DE.CUSTO != "NOITE DAS CAMÉLIAS",
+                                    CENTRO.DE.CUSTO != "ATIVIDADES DIVERSAS",
+                                    RUBRICA != "SERVIÇO DE LIMPEZA",
+                                    RUBRICA != "PRODUTOS DE LIMPEZA",
+                                    RUBRICA != "OUTROS",
+                                    RUBRICA != "MANUTENÇÃO / OBRAS",
+                                    RUBRICA != "ENCARGOS COM COLABORADORES",
+                                    RUBRICA != "ARTIGOS DECORATIVOS")
+
+
+gastos2020_RUB <- gastos2020 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
+Balanco2020_RUB <- gastos2020_RUB %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+mensal2020_RUB <- Balanco2020_RUB %>% filter(Valores != -30.00 & Valores != -538.46)
+
+knitr::kable(mensal2020_RUB)
+```
+
+**Tabela 2** *- Soma das despesas fixas entre Janeiro e Julho por Rúbrica*
+```{r despesas fixas}
+fixo2020_RUB <- Balanco2020_RUB %>% filter(Valores == -30.00 | Valores == -538.46)
+knitr::kable(fixo2020_RUB)
+```
+
+
+## Despesas correntes até ao final do ano
+
+Além das despesas já decorridas espera-se também o pagamento na Rúbrica "Impostos" relativo ao IMI, no valor de 1.088,04 €, sendo esta uma despesa fixa, como as anteriormente demonstradas. A **Tabela 3** demonstra os valores de consumo fixos esperados até ao final do corrente ano.
+
+**Tabela 3** *- Soma das despesas fixas entre Janeiro e Dezembro por Rúbrica*
+```{r extrapolação despesas fixas}
+fixo2020_RUB <- as_tibble(fixo2020_RUB)
+
+Estimado2020_RUB <- fixo2020_RUB %>% 
+        add_row(CENTRO.DE.CUSTO = "INSTALAÇÕES", RUBRICA = "IMPOSTOS", Valores = -1088.04)
+
+knitr::kable(Estimado2020_RUB)
+```
+
+No que respeita às despesas mensais calculámos de forma aritmética simples o valor que se espera pagar até ao fim do ano, por exemplo o "ALUGUER EXTINTORES", dividimos o pago pelo número de meses considerados (*7*) e multiplicou-se pelo número de meses do ano (*12*): `(-206.64/7)*12`. A única exceção neste cálculo é o "CONSUMO ELECTRICIDADE", ao qual se adicionou **20%** de consumo devido às atividades realizadas na coletividade durante a noite a partir de Agosto, nomeadamente os ensaios do Teatro União, assim como a inevitável entrada no horário de inverno. A **Tabela 4** sumariza os gastos com frequência mensal espectáveis até ao final do ano.
+
+**Tabela 4** *- Soma das despesas mensais entre Janeiro e Dezembro por Rúbrica*
+```{r extrapolação despesas mensais}
+
+EDP2020 <- mensal2020_RUB %>% filter(RUBRICA == "CONSUMO ELECTRICIDADE")
+transiente2020_RUB <- mensal2020_RUB %>% filter(RUBRICA != "CONSUMO ELECTRICIDADE")
+
+mensEsti2020_RUB <- transiente2020_RUB %>% mutate(Valores = round((Valores/7)*12, 
+                                                                  digits = 2))
+EDPEsti2020_RUB <- EDP2020 %>% mutate(Valores = round((Valores/7)*12+(Valores/7)*.2*5, 
+                                                      digits = 2))
+
+Mensal_Estimado2020_RUB <- bind_rows(mensEsti2020_RUB, EDPEsti2020_RUB)
+
+knitr::kable(Mensal_Estimado2020_RUB)
+```
+
+## Conclusão
+
+A soma das despesas referidas nas **Tabelas 3 e 4** é de `r sum(Mensal_Estimado2020_RUB$Valores) + sum(Estimado2020_RUB$Valores)` €, sendo que as despesas da Sociedade União Sintrense não se limitam às referidas rúbricas, pois a nossa sede por vezes necessita de manutenções preventivas ou corretivas dada a sua idade.
