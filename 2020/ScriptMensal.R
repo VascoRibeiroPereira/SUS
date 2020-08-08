@@ -9,9 +9,9 @@ library(stringr)
 #contasDF <- read.delim(dataFiles[length(dataFiles)], sep = ";")
 #contasDF <- as_tibble(contasDF)
 
-## Extração dos dados mês a mês - Correntemente em uso (03/2020)
+## Extração dos dados mês a mês ### Atualizar o nome do ficheiro
 
-contasDF <- read.delim("./extratos/Net24_MovConta_050100010730_20200601_20200630.csv", 
+contasDF <- read.delim("./extratos/Net24_MovConta_050100010730_20200701_20200731.csv", 
                        sep = ";")
 
 ## Conversão para formato de data
@@ -122,6 +122,15 @@ if (sum(grepl("PT50003600509910031520496", contasDF$DESCRIÇÃO)) > 0) {
                                           "INSTALAÇÕES", CENTRO.DE.CUSTO))
         contasDF <- mutate(contasDF, RUBRICA = 
                                    ifelse(grepl("PT50003600509910031520496", DESCRIÇÃO), "GÁS", RUBRICA))
+}
+
+# RENDA RESTAURANTE
+if (sum(grepl("JOSE ANTONIO AZEVEDO UNIPES", contasDF$DESCRIÇÃO)) > 0) {
+        contasDF <- mutate(contasDF, CENTRO.DE.CUSTO = 
+                                   ifelse(grepl("JOSE ANTONIO AZEVEDO UNIPES", DESCRIÇÃO), 
+                                          "INSTALAÇÕES", CENTRO.DE.CUSTO))
+        contasDF <- mutate(contasDF, RUBRICA = 
+                                   ifelse(grepl("JOSE ANTONIO AZEVEDO UNIPES", DESCRIÇÃO), "RENDA", RUBRICA))
 }
 
 # Adição de factor de mês para separar a tabela
