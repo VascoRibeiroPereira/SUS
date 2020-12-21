@@ -1,18 +1,24 @@
+
+mensalFunction <- function(currentYear, fileName){
+
+        ## enter the year as is (i.e. 2019, 2020, 2021, ...)
+        ## enter the file name with quotes and extention (i.e. "myTest.csv")
+        
+        
 ## Carregamento de bibliotecas
 library(dplyr)
 library(lubridate)
 library(stringr)
+library(openxlsx)
 
-## Extracção dos dados total
-#dataFiles <- list.files("./2020/extratos", pattern = "csv$", full.names = TRUE)
 
-#contasDF <- read.delim(dataFiles[length(dataFiles)], sep = ";")
-#contasDF <- as_tibble(contasDF)
+setwd("/Users/vascoalbertofiliperibeiro/R/SUS/")
+        
+myYear <- paste(getwd(),currentYear, sep="/")
 
-## Extração dos dados mês a mês ### Atualizar o nome do ficheiro
+setwd(myYear)
 
-contasDF <- read.delim("./extratos/Net24_MovConta_050100010730_20200701_20200731.csv", 
-                       sep = ";")
+contasDF <- read.delim(paste("./extratos/", fileName, sep = ""), sep = ";")
 
 ## Conversão para formato de data
 contasDF$DATA.MOV. <- ymd(contasDF$DATA.MOV.)
@@ -138,10 +144,7 @@ contasDF <- contasDF %>% mutate(Mês = as.factor(month(contasDF$DATA.MOV.)))
 contasDF <- contasDF[, c(8, 1:7)] # colocação do factor na coluna inicial
 
 
-library(openxlsx)
-write.xlsx(contasDF, file = paste("./tabelas_por_mes/", 
-                                  month(month(Sys.time())-1, label = TRUE),".xlsx", sep=""))
+return(write.xlsx(contasDF, file = paste("./tabelas_por_mes/", 
+                                         month(month(as.integer(levels(contasDF$Mês))), label = TRUE),".xlsx", sep="")))
 
-
-# setwd("~/R/SUS/2020")
-# source("ScriptMensal.R", echo = TRUE)
+}

@@ -11,7 +11,9 @@ Tratamento de dados mensal
 8.  Colocar o ficheiro na pasta “OriginaisExcel”  
 9.  Manualmente editar a tabela no software Numbers para só ter o o nome
     das colunas de interesse e guardar como `.csv` na pasta “extratos”  
-10. Correr o script “ScriptMensal.R”
+10. Abrir e correr o script “ScriptMensal.R”  
+11. Correr a função descrita no script:
+    `mensalFunction(currentYear, fileName)`
 
 ### Listas de tarefas
 

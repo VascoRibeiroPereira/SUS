@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE)
 
 O presente documento sumariza as despesas correntes realizadas pela Sociedade União Sintrense desde o inicio do ano de 2020, em resposta à comunicação dos serviços administrativos da União das Freguesias de Sintra: "Pedido de documentação de apoio ao subsídio atribuído no âmbito da suspensão do Apoio ao Associativismo", com a refª 1054/2020-PS, datado de 05 de agosto.
 
-Dado que é pedida uma relação de despesas até ao dia 31 de Dezembro do corrente ano, as despesas ainda não realizadas foram calculadas por extrapolação dos dados existentes.
+Dado que é pedida uma relação de despesas até ao dia 31 de dezembro do corrente ano, as despesas ainda não realizadas foram calculadas por extrapolação dos dados existentes.
 
 As **Tabelas 3 e 4** sumarizam os dados requeridos na comunicação supracitada.   
 
@@ -27,7 +27,7 @@ As **Tabelas 3 e 4** sumarizam os dados requeridos na comunicação supracitada.
 À data da realização do presente documento sumarizam-se as despesas correntes, com periodicidade mensal, na **Tabela 1**.   
 As despesas relativas a "Certidões e Declarações" e "Seguros" foram fixas e não se espera mais gastos nestas rúbricas até ao final do ano, sendo estas descritas na **Tabela 2**.   
 
-**Tabela 1** *- Soma das despesas mensais correntes entre Janeiro e Julho por Rúbrica*
+**Tabela 1** *- Soma das despesas mensais correntes entre janeiro e julho por Rúbrica*
 ```{r importar dados existentes e calculo de despesas mensais}
 library(openxlsx)
 library(dplyr)
@@ -56,7 +56,7 @@ mensal2020_RUB <- Balanco2020_RUB %>% filter(Valores != -30.00 & Valores != -538
 knitr::kable(mensal2020_RUB)
 ```
 
-**Tabela 2** *- Soma das despesas fixas entre Janeiro e Julho por Rúbrica*
+**Tabela 2** *- Soma das despesas fixas entre janeiro e julho por Rúbrica*
 ```{r despesas fixas}
 fixo2020_RUB <- Balanco2020_RUB %>% filter(Valores == -30.00 | Valores == -538.46)
 knitr::kable(fixo2020_RUB)
@@ -67,7 +67,7 @@ knitr::kable(fixo2020_RUB)
 
 Além das despesas já decorridas espera-se também o pagamento na Rúbrica "Impostos" relativo ao IMI, no valor de 1.088,04 €, sendo esta uma despesa fixa, como as anteriormente demonstradas. A **Tabela 3** demonstra os valores de consumo fixos esperados até ao final do corrente ano.
 
-**Tabela 3** *- Soma das despesas fixas entre Janeiro e Dezembro por Rúbrica*
+**Tabela 3** *- Soma das despesas fixas entre janeiro e dezembro por Rúbrica*
 ```{r extrapolação despesas fixas}
 fixo2020_RUB <- as_tibble(fixo2020_RUB)
 
@@ -79,7 +79,7 @@ knitr::kable(Estimado2020_RUB)
 
 No que respeita às despesas mensais calculámos de forma aritmética simples o valor que se espera pagar até ao fim do ano, por exemplo o "ALUGUER EXTINTORES", dividimos o pago pelo número de meses considerados (*7*) e multiplicou-se pelo número de meses do ano (*12*): `(-206.64/7)*12`. A única exceção neste cálculo é o "CONSUMO ELECTRICIDADE", ao qual se adicionou **20%** de consumo devido às atividades realizadas na coletividade durante a noite a partir de Agosto, nomeadamente os ensaios do Teatro União, assim como a inevitável entrada no horário de inverno. A **Tabela 4** sumariza os gastos com frequência mensal espectáveis até ao final do ano.
 
-**Tabela 4** *- Soma das despesas mensais entre Janeiro e Dezembro por Rúbrica*
+**Tabela 4** *- Soma das despesas mensais entre janeiro e dezembro por Rúbrica*
 ```{r extrapolação despesas mensais}
 
 EDP2020 <- mensal2020_RUB %>% filter(RUBRICA == "CONSUMO ELECTRICIDADE")
