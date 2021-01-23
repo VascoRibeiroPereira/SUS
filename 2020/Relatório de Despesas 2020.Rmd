@@ -1,0 +1,121 @@
+---
+title: | 
+        | "Relatório de Despesas da Sociedade União Sintrense - 2020"
+        | 
+author: |
+        | "Vasco Pereira" - Tesoureiro da SUS
+        | "Ricardo Pereira" - Presidente da SUS
+        | sociedadeuniaosintrense@gmail.com
+date: "23/01/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{r bibliotecas}
+library(openxlsx)
+library(dplyr)
+library(ggplot2)
+```
+
+## Resumo
+
+
+## Balanço de Atividades
+
+```{r importar dados}
+## Encontrar os nomes dos ficheiros
+ficheiros <- list.files("./tabelas_por_mes/completo", full.names = TRUE)
+
+contas2020 <- tibble()
+
+## Colar as tabelas de todos os ficheiros excel numa única tabela organizada
+for (i in 1:length(ficheiros)) {
+        
+        contas2020 <- contas2020 %>% 
+                bind_rows(read.xlsx(ficheiros[i], detectDates = TRUE))
+        
+}
+
+contas2020$Mês <- as.integer(contas2020$Mês)
+
+```
+
+
+```{r tabela geral por rubrica}
+
+contas_2020 <- contas2020 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
+Balanco2020 <- contas_2020 %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+knitr::kable(Balanco2020)
+
+```
+
+
+\newpage
+
+```{r balanço por Rubrica e CC - diagrama de caixas}
+
+Contas2020_RUB <- contas2020 %>% group_by(RUBRICA, Mês, CENTRO.DE.CUSTO)
+Balanco2020_RUB <- Contas2020_RUB %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+ggplot(Balanco2020_RUB, aes(RUBRICA, Valores, color = CENTRO.DE.CUSTO)) + geom_boxplot() + 
+        geom_dotplot(binaxis='y', stackdir='center', dotsize=.2) +
+        theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, size = 8),
+              axis.ticks.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+              panel.background = element_blank(), axis.line = element_line(colour = "black")) +
+        ylab("Valores (Euros)") +
+        xlab("Rúbrica") +
+        ggtitle("Balanço por Rúbrica e por Centro de Custo") +
+        guides(color=guide_legend(title="Centro de Custo"))
+
+
+```
+
+\newpage
+
+```{r tabela geral por CC - evolução mensal}
+
+Contas2020_Mês <- contas2020 %>% group_by(CENTRO.DE.CUSTO, Mês)
+Balanco2020_Mês <- Contas2020_Mês %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+knitr::kable(Balanco2020_Mês)
+
+```
+
+```{r gráfico evolução mensal}
+
+ggplot(Balanco2020_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) + 
+        theme(plot.title = element_text(hjust = 0.5)) +
+        ylab("Valores (Euros)") +
+        ggtitle("Evolução de gastos e receita por centro de custo \n com base mensal") +
+        guides(color=guide_legend(title="Centro de Custo")) +
+        geom_line() + 
+        geom_point() + scale_x_continuous(limits = c(1, 12), breaks = 1:12)
+
+```
+
+
+
+```{r gráfico evolução balanço}
+
+ggplot(contas2020, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
+        theme(plot.title = element_text(hjust = 0.5)) +
+        ylab("Saldo (Euros)") +
+        xlab("Data") +
+        ggtitle("Balanço 2020") +
+        geom_line() + 
+        geom_point()
+
+```
+
+```{r tabela total}
+
+knitr::kable(contas2020)
+
+```
+
+
+## Conclusão

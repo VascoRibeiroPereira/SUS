@@ -145,6 +145,6 @@ contasDF <- contasDF[, c(8, 1:7)] # colocação do factor na coluna inicial
 
 
 return(write.xlsx(contasDF, file = paste("./tabelas_por_mes/", 
-                                         month(month(as.integer(levels(contasDF$Mês))), label = TRUE),".xlsx", sep="")))
+                                         month(month(as.integer(levels(contasDF$Mês))), label = TRUE),".xlsx", sep=""))) ## mudar para 001 002 003 ... 012
 
 }
