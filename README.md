@@ -19,11 +19,12 @@ Tratamento de dados mensal
 
 1.  Criar rubricas detalhadas no cc Noite das Camélias
 
--   por exemplo: Artigos Decorativos; Rama; Camélia; Cenário
+-   por exemplo: Artigos Decorativos; Rama; Camélia; Cenário  
 
-1.  Substituir ao máximo os campos “Outros” de todas das rúbricas
-2.  Substitui CC “ENCARGOS COM INSTALAÇÔES” e adicionar Rubrica “Renda”
-3.  Remover CC renda restaurante
+1.  <s>Substituir ao máximo os campos “Outros” de todas das rúbricas</s>
+2.  <s>Substitui CC “ENCARGOS COM INSTALAÇÔES” e adicionar Rubrica
+    “Renda”</s>
+3.  <s>Remover CC renda restaurante</s>
 
 Repositório da tesouraria da SUS
 ================================

@@ -26,10 +26,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Listas de tarefas   
 1. Criar rubricas detalhadas no cc Noite das Camélias
-  - por exemplo: Artigos Decorativos; Rama; Camélia; Cenário
-2. Substituir ao máximo os campos "Outros" de todas das rúbricas
-3. Substitui CC "ENCARGOS COM INSTALAÇÔES" e adicionar Rubrica "Renda"
-4. Remover CC renda restaurante
+  - por exemplo: Artigos Decorativos; Rama; Camélia; Cenário    
+2. ~~Substituir ao máximo os campos "Outros" de todas das rúbricas~~
+3. ~~Substitui CC "ENCARGOS COM INSTALAÇÔES" e adicionar Rubrica "Renda"~~
+4. ~~Remover CC renda restaurante~~
 
 # Repositório da tesouraria da SUS   
 Este repositório serve para tratamento dos dados e gerar relatórios de contas a apresentar nas reuniões de direção e na Assembleia.   
