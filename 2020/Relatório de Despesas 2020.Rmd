@@ -40,7 +40,7 @@ O presente documento foi gerado por linha de código por programação nos softw
 2. O código é auditável - tendo conhecimentos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
 3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores.    
 
-No presente documento o código foi escondido para facilitar a leitura do mesmo, mas a versão completa, com código pode ser visualizada na seguinte página: [Relatório de Despesas 2020](Relatório de Despesas 2020). Nesta página foi adicionada uma propriedade que torna os gráficos interativos. Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
+No presente documento o código foi escondido para facilitar a leitura do mesmo, mas a versão completa, com código pode ser visualizada na seguinte página: [https://rpubs.com/SUSintrense/relatorio2020](https://rpubs.com/SUSintrense/relatorio2020). Nesta página foi adicionada uma propriedade que torna os gráficos interativos. Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
 
 \pagebreak
 
