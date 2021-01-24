@@ -1,0 +1,51 @@
+---
+title: "Contas 2020"
+author: "Vasco Pereira"
+date: "1/24/2021"
+output: pdf_document
+classoption: landscape
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+## Contas de 2020 - Movimentos
+
+```{r importar dados}
+## Bibliotecas
+
+# Nome das bibliotecas
+packages <- c("openxlsx", "dplyr")
+
+# Instalar bibliotecas que não existam
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# Carregar bibliotecas
+invisible(lapply(packages, library, character.only = TRUE))
+
+
+## Encontrar os nomes dos ficheiros
+ficheiros <- list.files("./tabelas_por_mes/completo", full.names = TRUE)
+
+contas2020 <- tibble()
+
+## Colar as tabelas de todos os ficheiros excel numa única tabela organizada
+for (i in 1:length(ficheiros)) {
+        
+        contas2020 <- contas2020 %>% 
+                bind_rows(read.xlsx(ficheiros[i], detectDates = TRUE))
+        
+}
+
+contas2020$Mês <- as.integer(contas2020$Mês)
+
+colnames(contas2020) <- c("Mês", "Data", "Data", "Descrição", "Valor", "Saldo", "Centro de Custo", "Rubrica")
+
+knitr::kable(contas2020[,c(-1,-3)], "markdown") %>%
+  kableExtra::kable_styling(full_width = F)
+
+```

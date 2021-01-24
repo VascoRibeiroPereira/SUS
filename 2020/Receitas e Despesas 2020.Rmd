@@ -1,19 +1,30 @@
 ---
 title: | 
-        | "Relatório de Despesas da Sociedade União Sintrense - 2020"
+        | Relatório de Despesas da Sociedade União Sintrense - 2020
         | 
 author: |
-        | "Vasco Pereira" - Tesoureiro da SUS
-        | "Ricardo Pereira" - Presidente da SUS
+        | Vasco Pereira - Tesoureiro da SUS
+        | Ricardo Pereira - Presidente da SUS
+        |
         | sociedadeuniaosintrense@gmail.com
+        |
 date: "23/01/2021"
-output: pdf_document
-#classoption: landscape
+output: 
+        html_document:
+                toc: true
+                toc_float: true
+                toc_depth: 3
+                theme: united
+                highlight: breezedark
+                df_print: paged
+                code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = TRUE, 
+                      fig.align = "center", message = FALSE, warning = FALSE)
 ```
+
 
 ```{r bibliotecas}
 
@@ -40,7 +51,6 @@ O presente documento foi gerado por linha de código por programação nos softw
 2. O código é auditável - tendo conhecimentos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
 3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores.    
 
-No presente documento o código foi escondido para facilitar a leitura do mesmo, mas a versão completa, com código pode ser visualizada na seguinte página: [Relatório de Despesas 2020](Relatório de Despesas 2020). Nesta página foi adicionada uma propriedade que torna os gráficos interativos. Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
 
 \pagebreak
 
@@ -251,4 +261,17 @@ ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() +
         guides(color=guide_legend(title="Centro de Custo")) +
         geom_hline(yintercept = 0, size = .2, color = "grey") +
         guides(color=guide_legend(title="Centro de Custo"))
+
+
+
+```
+
+## Movimentos 2020
+
+```{r tabela completa}
+colnames(contas) <- c("Mês", "Data", "Data", "Descrição", "Valor", "Saldo", "Centro de Custo", "Rubrica")
+
+knitr::kable(contas[,c(-1,-3)], "html") %>%
+  kableExtra::kable_styling(full_width = F)
+
 ```
