@@ -29,7 +29,7 @@ knitr::opts_chunk$set(echo = TRUE,
 ```{r bibliotecas}
 
 # Nome das bibliotecas
-packages <- c("openxlsx", "dplyr", "ggplot2", "lubridate", "gridExtra")
+packages <- c("openxlsx", "dplyr", "ggplot2", "lubridate", "gridExtra", "plotly")
 
 # Instalar bibliotecas que não existam
 installed_packages <- packages %in% rownames(installed.packages())
@@ -101,13 +101,15 @@ Apesar dos contratempos e das dificuldades financeiras é evidente pelo gráfico
 
 ```{r gráfico evolução balanço, fig.align="center"}
 
-ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
+p <- ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
         theme(plot.title = element_text(hjust = 0.5)) +
         ylab("Saldo (Euros)") +
         xlab("Data") +
         ggtitle("Balanço 2020") +
         geom_line() + 
         geom_point()
+
+ggplotly(p)
 
 ```
 
@@ -159,7 +161,7 @@ knitr::kable(Contas_Anual_Receita)
 
 
 ```{r gráficos anuais por CC }
-grid.arrange(gasto, receita, nrow=1, ncol=2)
+grid.arrange(receita, gasto, nrow=1, ncol=2)
 ```
 
 A nível percentual é evidente que as **Instalações** representam a esmagadora maioria dos gastos no entanto, no ano de 2020, houve uma significativa contribuição de receita através de apoios para **Atividades Diversas** e para o **Teatro União** que contribuíram para a sustentabilidade financeira da Sociedade União Sintrense.
@@ -200,7 +202,7 @@ Balanco_Mês <- Balanco_Mês[,c(2,1,3)]
 
 Balanco_Mês_Label <- Balanco_Mês
 Balanco_Mês_Label$Mês <- month(Balanco_Mês_Label$Mês, label = TRUE)
-colnames(Contas_Anual_final) <- c("Mês", "Centro de Custo", "Valor (euros)")
+colnames(Balanco_Mês_Label) <- c("Mês", "Centro de Custo", "Valor (euros)")
 
 knitr::kable(Balanco_Mês_Label)
 
@@ -216,13 +218,15 @@ Nota-se uma clara quebra de todas as atividades no inicio do ano devido à situa
 
 ```{r gráfico evolução mensal, fig.align="center", fig.width=10, fig.height=5}
 
-ggplot(Balanco_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) + 
+m <- ggplot(Balanco_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) + 
         theme(plot.title = element_text(hjust = 0.5)) +
         ylab("Valores (Euros)") +
         ggtitle("Evolução de gastos e receita por centro de custo \n com base mensal") +
         guides(color=guide_legend(title="Centro de Custo")) +
         geom_line() + 
         geom_point() + scale_x_continuous(limits = c(1, 12), breaks = 1:12)
+
+ggplotly(m)
 
 ```
 
@@ -250,7 +254,7 @@ A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreens�
 
 colnames(Balanco) <- c("CENTRO.DE.CUSTO", "RUBRICA", "Valores")
 
-ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() + 
+n <- ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() + 
         theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, vjust = 0.1, hjust=1, size = 10),
               axis.ticks.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
               panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="bottom",
@@ -262,7 +266,7 @@ ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() +
         geom_hline(yintercept = 0, size = .2, color = "grey") +
         guides(color=guide_legend(title="Centro de Custo"))
 
-
+ggplotly(n)
 
 ```
 

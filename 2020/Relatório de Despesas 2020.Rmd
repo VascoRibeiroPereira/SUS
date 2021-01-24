@@ -190,7 +190,7 @@ Balanco_Mês <- Balanco_Mês[,c(2,1,3)]
 
 Balanco_Mês_Label <- Balanco_Mês
 Balanco_Mês_Label$Mês <- month(Balanco_Mês_Label$Mês, label = TRUE)
-colnames(Contas_Anual_final) <- c("Mês", "Centro de Custo", "Valor (euros)")
+colnames(Balanco_Mês_Label) <- c("Mês", "Centro de Custo", "Valor (euros)")
 
 knitr::kable(Balanco_Mês_Label)
 
