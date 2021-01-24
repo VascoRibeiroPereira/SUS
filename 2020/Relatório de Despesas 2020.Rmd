@@ -7,12 +7,19 @@ author: |
         | "Ricardo Pereira" - Presidente da SUS
         | sociedadeuniaosintrense@gmail.com
 date: "23/01/2021"
-output: pdf_document
-#classoption: landscape
+output: 
+  pdf_document:
+    keep_tex: true
+    includes:
+      in_header: header.tex
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{cat, engine.opts = list(file = "header.tex")}
+\renewcommand{\linethickness}{0.05em}
 ```
 
 ```{r bibliotecas}
@@ -252,3 +259,32 @@ ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() +
         geom_hline(yintercept = 0, size = .2, color = "grey") +
         guides(color=guide_legend(title="Centro de Custo"))
 ```
+
+\pagebreak
+
+
+
+## A Direção
+
+\vspace{80pt}
+
+___
+
+\begin{center}
+
+Data e Assinatura
+
+\end{center}
+
+
+## O Concelho Fiscal
+
+\vspace{80pt}
+
+___
+
+\begin{center}
+
+Data e Assinatura
+
+\end{center}
