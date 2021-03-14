@@ -18,18 +18,17 @@ knitr::opts_chunk$set(echo = TRUE)
 5. Selecionar do dia 1 ao último dia do mês em análise   
 6. Consultar   
 7. Carregar no simbolo de download (descarrega um `.xls`)   
-8. Colocar o ficheiro na pasta **\ano\extratos\OriginaisExcel**   
-9. Com software Numbers ou outro, guardar o documento como `.csv` na pasta **\ano\extratos**   
+8. Colocar o ficheiro na pasta **/ano/extratos/OriginaisExcel**   
+9. Com software Numbers ou outro, guardar o documento como `.csv` na pasta **/ano/extratos**   
 10. Abrir e correr o script "ScriptMensal.R"  
 11. Correr a função descrita no script: `mensalFunction(currentYear, fileName)`
 
 
 ### Listas de tarefas   
 1. Criar rubricas detalhadas no cc Noite das Camélias
-  - por exemplo: Artigos Decorativos; Rama; Camélia; Cenário    
-2. ~~Substituir ao máximo os campos "Outros" de todas das rúbricas~~
-3. ~~Substitui CC "ENCARGOS COM INSTALAÇÔES" e adicionar Rubrica "Renda"~~
-4. ~~Remover CC renda restaurante~~
+        - por exemplo: Artigos Decorativos; Rama; Camélia; Cenário   
+  
+2. Construir uma Shinny App para automatizar todo este processo sem necessidade de skills de programação
 
 # Repositório da tesouraria da SUS   
 Este repositório serve para tratamento dos dados e gerar relatórios de contas a apresentar nas reuniões de direção e na Assembleia.   

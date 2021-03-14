@@ -7,23 +7,20 @@
 5.  Selecionar do dia 1 ao último dia do mês em análise  
 6.  Consultar  
 7.  Carregar no simbolo de download (descarrega um `.xls`)  
-8.  Colocar o ficheiro na pasta \*\*\*  
+8.  Colocar o ficheiro na pasta **/ano/extratos/OriginaisExcel**  
 9.  Com software Numbers ou outro, guardar o documento como `.csv` na
-    pasta \*\*\*  
+    pasta **/ano/extratos**  
 10. Abrir e correr o script “ScriptMensal.R”  
 11. Correr a função descrita no script:
     `mensalFunction(currentYear, fileName)`
 
 ### Listas de tarefas
 
-1.  Criar rubricas detalhadas no cc Noite das Camélias
+1.  Criar rubricas detalhadas no cc Noite das Camélias - por exemplo:
+    Artigos Decorativos; Rama; Camélia; Cenário
 
--   por exemplo: Artigos Decorativos; Rama; Camélia; Cenário  
-
-1.  <s>Substituir ao máximo os campos “Outros” de todas das rúbricas</s>
-2.  <s>Substitui CC “ENCARGOS COM INSTALAÇÔES” e adicionar Rubrica
-    “Renda”</s>
-3.  <s>Remover CC renda restaurante</s>
+2.  Construir uma Shinny App para automatizar todo este processo sem
+    necessidade de skills de programação
 
 # Repositório da tesouraria da SUS
 
