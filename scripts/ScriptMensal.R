@@ -18,7 +18,8 @@ myYear <- paste(getwd(),currentYear, sep="/")
 
 setwd(myYear)
 
-contasDF <- read.delim(paste("./extratos/", fileName, sep = ""), sep = ";")
+contasDF <- read.delim(paste("./extratos/", fileName, sep = ""), sep = ";", 
+                       skip = 8)[,1:5]
 
 ## Conversão para formato de data
 contasDF$DATA.MOV. <- ymd(contasDF$DATA.MOV.)
@@ -143,6 +144,7 @@ if (sum(grepl("JOSE ANTONIO AZEVEDO UNIPES", contasDF$DESCRIÇÃO)) > 0) {
 contasDF <- contasDF %>% mutate(Mês = as.factor(month(contasDF$DATA.MOV.)))
 contasDF <- contasDF[, c(8, 1:7)] # colocação do factor na coluna inicial
 
+dir.create("tabelas_por_mes", showWarnings = FALSE)
 
 return(write.xlsx(contasDF, file = paste("./tabelas_por_mes/", 
                                          month(month(as.integer(levels(contasDF$Mês))), label = TRUE),".xlsx", sep="")))

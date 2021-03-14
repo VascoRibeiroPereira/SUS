@@ -18,8 +18,8 @@ knitr::opts_chunk$set(echo = TRUE)
 5. Selecionar do dia 1 ao último dia do mês em análise   
 6. Consultar   
 7. Carregar no simbolo de download (descarrega um `.xls`)   
-8. Colocar o ficheiro na pasta "OriginaisExcel"   
-9. Manualmente editar a tabela no software Numbers para só ter o o nome das colunas de interesse e guardar como `.csv` na pasta "extratos"   
+8. Colocar o ficheiro na pasta **\ano\extratos\OriginaisExcel**   
+9. Com software Numbers ou outro, guardar o documento como `.csv` na pasta **\ano\extratos**   
 10. Abrir e correr o script "ScriptMensal.R"  
 11. Correr a função descrita no script: `mensalFunction(currentYear, fileName)`
 

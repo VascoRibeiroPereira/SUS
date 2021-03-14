@@ -1,5 +1,4 @@
-Tratamento de dados mensal
-==========================
+# Tratamento de dados mensal
 
 1.  Entrar no site Montepio  
 2.  Contas à Ordem  
@@ -8,9 +7,9 @@ Tratamento de dados mensal
 5.  Selecionar do dia 1 ao último dia do mês em análise  
 6.  Consultar  
 7.  Carregar no simbolo de download (descarrega um `.xls`)  
-8.  Colocar o ficheiro na pasta “OriginaisExcel”  
-9.  Manualmente editar a tabela no software Numbers para só ter o o nome
-    das colunas de interesse e guardar como `.csv` na pasta “extratos”  
+8.  Colocar o ficheiro na pasta \*\*\*  
+9.  Com software Numbers ou outro, guardar o documento como `.csv` na
+    pasta \*\*\*  
 10. Abrir e correr o script “ScriptMensal.R”  
 11. Correr a função descrita no script:
     `mensalFunction(currentYear, fileName)`
@@ -26,14 +25,12 @@ Tratamento de dados mensal
     “Renda”</s>
 3.  <s>Remover CC renda restaurante</s>
 
-Repositório da tesouraria da SUS
-================================
+# Repositório da tesouraria da SUS
 
 Este repositório serve para tratamento dos dados e gerar relatórios de
 contas a apresentar nas reuniões de direção e na Assembleia.
 
-Centros de Custo
-================
+# Centros de Custo
 
 Os centros de custo podem ser adaptados conforme as necessidades
 mediante diálogo com o tesoureiro de forma a facilitar o ajuste da
