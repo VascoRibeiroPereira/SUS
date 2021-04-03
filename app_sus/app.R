@@ -3,7 +3,12 @@ source("libs_form.R")
 # Define UI for application 
 ui <- fluidPage(
     useShinyjs(),
-    titlePanel("Estudo Financeiro SUS"),
+    #titlePanel("Estudo Financeiro SUS"),
+    
+    titlePanel( div(column(width = 6, h2("Estudo Financeiro SUS")), 
+                    column(width = 6,img(src = "logo.jpeg", height = 92, width = 92, align = "right")))
+    ),
+    
     hr(style="border-color: grey;"),
     sidebarLayout(
         sidebarPanel(
