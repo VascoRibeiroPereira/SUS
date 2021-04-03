@@ -1,24 +1,13 @@
-#library(shiny)
-#library(DT)
-
-#library(shinymanager)
-#library(keyring)
-
-#library(dplyr)
-
-#CCR <- read.csv("./CentrosdeCusto.csv", sep=";")
-
-#CC <- unique(CCR$CENTRO.DE.CUSTO)
-#CCrub <- unique(CCR$RUBRICA)
-
 source("libs_form.R")
 
 # Define UI for application 
 ui <- fluidPage(
+    useShinyjs(),
     titlePanel("Estudo Financeiro SUS"),
     hr(style="border-color: grey;"),
     sidebarLayout(
         sidebarPanel(
+          
             fileInput("file1", "Upload de um ficheiro CSV",
                       accept = c(
                           "text/csv",
@@ -37,11 +26,12 @@ ui <- fluidPage(
             p(""),
             actionButton("gobutton","Start"),
             downloadButton("downloadData", "Download"),
+            actionButton("refresh","Refresh"),
         ),
         
         mainPanel(
             tabsetPanel(
-                tabPanel("Dados Inseridos", dataTableOutput("contents"), verbatimTextOutput('sel'))
+                tabPanel("Dados Inseridos", dataTableOutput("contents"))
                 )
             )
         )
@@ -54,7 +44,7 @@ server <- function(input, output) {
         if(is.null(input$file1)){
             return()
         }
-
+      
       inFile <- input$file1
       myDF <- read.csv(inFile$datapath, skip = input$rowsHeader, sep = input$sep)[,1:input$nCols]
 
@@ -66,11 +56,11 @@ server <- function(input, output) {
         
       for (i in 1:nrow(myDF)) {
 
-        if (is.na(myDF$CENTRO.DE.CUSTO[i]) ) { ## this assumes that a code have run before creating the column
+        if (is.na(myDF$CENTRO.DE.CUSTO[i]) ) {
             myDF$CENTRO.DE.CUSTO[i] <- as.character(selectInput(paste0("sel", i), "", choices = CC, width = "100px"))
         }
           
-        if (is.na(myDF$RUBRICA[i]) ) { ## this assumes that a code have run before creating the column
+        if (is.na(myDF$RUBRICA[i]) ) {
             myDF$RUBRICA[i] <- as.character(selectInput(paste0("sel2", i), "", choices = CCrub, width = "100px"))
           
         }
@@ -91,21 +81,30 @@ server <- function(input, output) {
       Shiny.bindAll(table.table().node());")
     )
 
-    selector_CC <- renderPrint({
+    selector_CC <- renderPrint({ ## algo aqui esta a correr mal
         str(sapply(1:nrow(data()), function(i) input[[paste0("sel", i)]]))
     })
     
-    selector_R <- renderPrint({
+    selector_R <- renderPrint({ ## algo aqui esta a correr mal
       str(sapply(1:nrow(data()), function(i) input[[paste0("sel2", i)]]))
     })
+    
+    # Trigger the oberveEvent whenever the value of rv$download_flag changes
+    rv <- reactiveValues(download_flag = 0)
+    
+    observeEvent(rv$download_flag, {
+      shinyjs::refresh()
+    }, ignoreInit = TRUE)
+    
+    # Download file
     
     output$downloadData <- downloadHandler(
     
         filename = function() {
-            #paste("test.csv")
           paste0(letters[as.integer(levels(data()$Mês))], "_", 
                 month(month(as.integer(levels(data()$Mês))), label = TRUE),".csv")
         },
+        
         content = function(file) {
             
           RUBRICA <- unlist(str_extract_all(selector_R(), "[A-Z-Ç Ã Á É Ó Õ - . ( ) /]+")) %>% trimws()
@@ -117,8 +116,6 @@ server <- function(input, output) {
           for (i in 1:length(tmpVector)){ ## extract auto value and merge it to the selected vector
             RUBRICA[tmpVector[i]] <- data()$RUBRICA[tmpVector[i]]
           }
-            
-          
           
           CENTRO.DE.CUSTO <- unlist(str_extract_all(selector_CC(), "[A-Z-Ç Ã Á É Ó Õ - . ( ) /]+")) %>% trimws()
           CENTRO.DE.CUSTO <- CENTRO.DE.CUSTO[2:length(CENTRO.DE.CUSTO)]
@@ -134,10 +131,14 @@ server <- function(input, output) {
                                  select(-CENTRO.DE.CUSTO,-RUBRICA), 
                                CENTRO.DE.CUSTO = CENTRO.DE.CUSTO,
                                RUBRICA = RUBRICA)
+          
           write.csv(finalDF, file, row.names = FALSE)
+          
+          # When the downloadHandler function runs, increment rv$download_flag - trigger the refresh command
+          rv$download_flag <- rv$download_flag + 1
         }
     )
-
+    
 }
 
 # Run the application 
