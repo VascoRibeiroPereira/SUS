@@ -34,7 +34,7 @@ mediante diálogo com o tesoureiro de forma a facilitar o ajuste da
 programação.  
 Nota:
 
-    ccRubri <- read.delim("CentrosdeCusto.csv", sep = ";")
+    ccRubri <- read.delim("app_sus/CentrosdeCusto.csv", sep = ";")
     knitr::kable(ccRubri)
 
 <table>

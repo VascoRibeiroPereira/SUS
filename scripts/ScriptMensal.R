@@ -16,7 +16,7 @@ mensalFunction <- function(currentYear, fileName){
         
         
         ## Carregar tabela com o automatismo - conjunto de códigos de movimentos bancários associados a cc e rubricas
-        auto_cc_r <- read.csv("contas_sus/auto_cc_r.csv")
+        auto_cc_r <- read.csv("app_sus/auto_cc_r.csv")
         
         myYear <- paste(getwd(),currentYear, sep="/")
         

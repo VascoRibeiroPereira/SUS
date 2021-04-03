@@ -38,6 +38,6 @@ Os centros de custo podem ser adaptados conforme as necessidades mediante diálo
 Nota: 
 
 ```{r centros de custo e rubricas}
-ccRubri <- read.delim("CentrosdeCusto.csv", sep = ";")
+ccRubri <- read.delim("app_sus/CentrosdeCusto.csv", sep = ";")
 knitr::kable(ccRubri)
 ```
