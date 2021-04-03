@@ -1,14 +1,16 @@
-#
-# This is a Shiny web application. You can run the application by clicking
-# the 'Run App' button above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
 
 library(shiny)
 library(DT)
+
+library(shinymanager)
+library(keyring)
+
+library(dplyr)
+
+CCR <- read.csv("./CentrosdeCusto.csv", sep=";")
+
+CC <- unique(CCR$CENTRO.DE.CUSTO)
+CCrub <- unique(CCR$RUBRICA)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -23,11 +25,11 @@ ui <- fluidPage(
                           ".csv")
             ),
             
-            p("Escolha o número de linhas no cabeçalho do ficheiro (default são 8)"),
             numericInput("rowsHeader", "Número de Linhas no Cabeçalho", value = 8, min = 0),
             p(""),
-            p("Escolha o número de colunas a importar (default são 5)"),
             numericInput("nCols", "Número de Colunas", value = 5, min = 1),
+            p(""),
+            radioButtons("sep", "Separador", choices = c(";", ","), inline = TRUE),
             p(""),
             p("Created by"),
             a("Vasco Pereira", href = "https://www.linkedin.com/in/vascoribeirosintra/"),
@@ -53,16 +55,24 @@ server <- function(input, output) {
         }
 
         inFile <- input$file1
-        myDF <- read.csv(inFile$datapath, skip = input$rowsHeader, sep = ";")[,1:input$nCols]
+        myDF <- read.csv(inFile$datapath, skip = input$rowsHeader, sep = input$sep)[,1:input$nCols]
       
         for (i in 1:nrow(myDF)) {
-            myDF$selector_test[i] <- as.character(selectInput(paste0("sel", i), "", choices = c("test1", "test2", "test3"), width = "100px"))
+
+          if (is.na(myDF$CENTRO.DE.CUSTO[i]) ) { ## this assumes that a code have run before creating the column
+            myDF$CENTRO.DE.CUSTO[i] <- as.character(selectInput(paste0("sel", i), "", choices = CC, width = "100px"))
+          }
+          
+          if (is.na(myDF$RUBRICA[i]) ) { ## this assumes that a code have run before creating the column
+            myDF$RUBRICA[i] <- as.character(selectInput(paste0("sel2", i), "", choices = CCrub, width = "100px"))
+          
+              }
         }
         
         myDF
     })
     
-    
+
     output$contents <- DT::renderDataTable(
         data(), escape = FALSE, selection = 'none', server = FALSE,
         options = list(dom = 't', paging = FALSE, ordering = FALSE),
@@ -75,8 +85,12 @@ server <- function(input, output) {
       Shiny.bindAll(table.table().node());")
     )
 
-    selector_test <- renderPrint({
+    selector_CC <- renderPrint({
         str(sapply(1:nrow(data()), function(i) input[[paste0("sel", i)]]))
+    })
+    
+    selector_R <- renderPrint({
+      str(sapply(1:nrow(data()), function(i) input[[paste0("sel2", i)]]))
     })
     
     
@@ -86,12 +100,32 @@ server <- function(input, output) {
             paste("test.csv")
         },
         content = function(file) {
-
-            mySelector <- unlist(strsplit(selector_test(), " "))
-            mySelector <- as.character(mySelector[4:length(mySelector)])
-            cbind(data(), mySelector)
-            write.csv(cbind(data()[,-length(data())], mySelector), file, row.names = FALSE)
+          
+            RUBRICA <- unlist(strsplit(selector_R(), " "))
+            RUBRICA <- as.character(RUBRICA[4:length(RUBRICA)])
+            RUBRICA <- RUBRICA[grep("[A-Z]", RUBRICA)]
             
+            tmpVector <- grep("NULL", RUBRICA)
+            
+            for (i in 1:length(tmpVector)){ ## extract auto value and merge it to the selected vector
+              RUBRICA[tmpVector[i]] <- data()$RUBRICA[tmpVector[i]]
+            }
+            
+            CENTRO.DE.CUSTO <- unlist(strsplit(selector_CC(), " "))
+            CENTRO.DE.CUSTO <- as.character(CENTRO.DE.CUSTO[4:length(CENTRO.DE.CUSTO)])
+            CENTRO.DE.CUSTO <- CENTRO.DE.CUSTO[grep("[A-Z]", CENTRO.DE.CUSTO)]
+            
+            tmpVector <- grep("NULL", CENTRO.DE.CUSTO)
+            
+            for (i in 1:length(tmpVector)){ ## extract auto value and merge it to the selected vector
+              CENTRO.DE.CUSTO[tmpVector[i]] <- data()$CENTRO.DE.CUSTO[tmpVector[i]]
+            }
+
+            finalDF <- bind_cols(data() %>% 
+                                   select(-CENTRO.DE.CUSTO,-RUBRICA), 
+                                 CENTRO.DE.CUSTO = CENTRO.DE.CUSTO,
+                                 RUBRICA = RUBRICA)
+            write.csv(finalDF, file, row.names = FALSE)
             
         }
     )
