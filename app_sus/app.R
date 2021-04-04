@@ -1,5 +1,7 @@
 ui <- dashboardPage(
   
+  skin = "red",
+  
   
   dashboardHeader(title = "Estudo Financeiro SUS"
   ),
