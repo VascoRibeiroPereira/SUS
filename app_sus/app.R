@@ -1,3 +1,6 @@
+source("libs_form.R")
+
+
 # define some credentials
 credentials <- data.frame(
   user = c("sus", "ricardo"), # mandatory
@@ -78,7 +81,8 @@ ui <- dashboardPage(
               h2("Instruções desta Ferramenta")
       )
     )
-  )
+  ),
+  useShinyjs()
 )
 
 # Wrap your UI with secure_app
