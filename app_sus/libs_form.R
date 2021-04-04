@@ -8,6 +8,7 @@ library(dplyr)
 library(lubridate)
 library(stringr)
 library(shinyjs)
+library(shinydashboard)
 
 ## Tabela de atribuições CC e Rubricas
 CCR <- read.csv("./CentrosdeCusto.csv", sep=";")
