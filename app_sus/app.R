@@ -1,3 +1,24 @@
+# define some credentials
+credentials <- data.frame(
+  user = c("sus", "ricardo"), # mandatory
+  password = c("test1", "test2"), # mandatory
+  start = c(NA), # optional (all others)
+  expire = c(NA, NA), # input a date like "2022-12-31"
+  admin = c(TRUE, FALSE),
+  comment = "Simple and secure authentification mechanism 
+  for single ‘Shiny’ applications.",
+  stringsAsFactors = FALSE
+)
+
+key_set("R-shinymanager-key", "obiwankenobi")
+
+create_db(
+  credentials_data = credentials,
+  sqlite_path = "database.sqlite", # will be created
+  passphrase = key_get("R-shinymanager-key", "obiwankenobi")
+  # passphrase = "passphrase_wihtout_keyring"
+)
+
 ui <- dashboardPage(
   
   skin = "red",
@@ -60,7 +81,23 @@ ui <- dashboardPage(
   )
 )
 
+# Wrap your UI with secure_app
+ui <- secure_app(ui, enable_admin = TRUE)
+
 server <- function(input, output) {
+  
+  # check_credentials directly on sqlite db
+  res_auth <- secure_server(
+    check_credentials = check_credentials(
+      "database.sqlite",
+      passphrase = key_get("R-shinymanager-key", "obiwankenobi")
+      # passphrase = "passphrase_wihtout_keyring"
+    )
+  )
+  
+  output$auth_output <- renderPrint({
+    reactiveValuesToList(res_auth)
+  })
   
   
   data <- eventReactive(input$gobutton,{
