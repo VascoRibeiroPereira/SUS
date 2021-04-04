@@ -15,6 +15,10 @@ CCR <- read.csv("./CentrosdeCusto.csv", sep=";")
 CC <- unique(CCR$CENTRO.DE.CUSTO)
 CCrub <- unique(CCR$RUBRICA)
 
+auto_cc_r <- read.csv("auto_cc_r.csv")
+#d1 = auto_cc_r
+#d1$Date = Sys.time() + seq_len(nrow(d1))
+
 ## Função de automatismo
 
 
@@ -22,7 +26,7 @@ mensalFunction <- function(contasDF){
         
 
         ## Carregar tabela com o automatismo - conjunto de códigos de movimentos bancários associados a cc e rubricas
-        auto_cc_r <- read.csv("auto_cc_r.csv")
+        #auto_cc_r <- read.csv("auto_cc_r.csv")
         
         ## Conversão para formato de data
         contasDF$DATA.MOV. <- ymd(contasDF$DATA.MOV.)

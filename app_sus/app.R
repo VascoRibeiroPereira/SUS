@@ -34,6 +34,7 @@ ui <- dashboardPage(
     
     sidebarMenu(
       menuItem("Processamento", tabName = "proc", icon = icon("table")),
+      menuItem("Automatismo", tabName = "auto", icon = icon("robot")),
       menuItem("Instruções", tabName = "instr", icon = icon("question-circle")),
       menuItem(a("Created by Vasco Pereira", href = "https://www.linkedin.com/in/vascoribeirosintra/")),
       menuItem(tags$img(src = "logo.jpeg", height = 92, width = 92, align = "right"))
@@ -72,11 +73,23 @@ ui <- dashboardPage(
                 )
                 
                 
-                
               )
       ),
       
       # Second tab content
+      tabItem(tabName = "auto",
+              h2("Tabela de Automatismo"),
+              
+              box(
+                
+                DTOutput("auto_cc_r")
+                
+              )
+              
+              
+      ),
+      
+      # Third tab content
       tabItem(tabName = "instr",
               h2("Instruções desta Ferramenta")
       )
@@ -153,7 +166,7 @@ server <- function(input, output) {
     str(sapply(1:nrow(data()), function(i) input[[paste0("sel2", i)]]))
   })
   
-  # Trigger the oberveEvent whenever the value of rv$download_flag changes
+  # Trigger the observeEvent whenever the value of rv$download_flag changes
   rv <- reactiveValues(download_flag = 0)
   
   observeEvent(rv$download_flag, {
@@ -202,7 +215,26 @@ server <- function(input, output) {
       rv$download_flag <- rv$download_flag + 1
     }
   )
-
+  
+  
+  
+  output$auto_cc_r <- renderDT(auto_cc_r,
+                                      selection = 'none', editable = FALSE, 
+                                      rownames = TRUE,
+                                      
+                                      options = list(
+                                        paging = FALSE,
+                                        searching = FALSE,
+                                        fixedColumns = TRUE,
+                                        autoWidth = TRUE,
+                                        ordering = TRUE,
+                                        dom = 'Bfrtip'
+                                      ),
+                                      
+                                      class = "display"
+    
+  )
 }
 
 shinyApp(ui, server)
+
