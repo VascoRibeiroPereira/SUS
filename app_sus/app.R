@@ -71,8 +71,6 @@ ui <- dashboardPage(
                 box(
                   dataTableOutput("contents"), width = 12
                 )
-                
-                
               )
       ),
       
@@ -82,16 +80,16 @@ ui <- dashboardPage(
               
               box(
                 
-                DTOutput("auto_cc_r")
+                DTOutput("auto_cc_r"), width = 12
                 
               )
-              
-              
       ),
       
       # Third tab content
       tabItem(tabName = "instr",
-              h2("Instruções desta Ferramenta")
+              h2("Instruções desta Ferramenta"),
+              
+                HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/Em-5uRhlje8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>')
       )
     )
   ),
@@ -223,7 +221,7 @@ server <- function(input, output) {
                                       rownames = TRUE,
                                       
                                       options = list(
-                                        paging = FALSE,
+                                        paging = TRUE,
                                         searching = FALSE,
                                         fixedColumns = TRUE,
                                         autoWidth = TRUE,
