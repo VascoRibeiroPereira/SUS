@@ -14,6 +14,9 @@
 11. Correr a função descrita no script:
     `mensalFunction(currentYear, fileName)`
 
+Os pontos 10 e 11 podem agora ser substituídos pela utilização da APP
+disponível [Aqui](https://www.shinyapps.io/admin/#/application/3905724)
+
 ### Listas de tarefas
 
 1.  Criar rubricas detalhadas no cc Noite das Camélias - por exemplo:

@@ -20,8 +20,10 @@ knitr::opts_chunk$set(echo = TRUE)
 7. Carregar no simbolo de download (descarrega um `.xls`)   
 8. Colocar o ficheiro na pasta **/ano/extratos/OriginaisExcel**   
 9. Com software Numbers ou outro, guardar o documento como `.csv` na pasta **/ano/extratos**   
-10. Abrir e correr o script "ScriptMensal.R"  
+10. Abrir e correr o script "ScriptMensal.R"              
 11. Correr a função descrita no script: `mensalFunction(currentYear, fileName)`
+
+Os pontos 10 e 11 podem agora ser substituídos pela utilização da APP disponível [Aqui](https://www.shinyapps.io/admin/#/application/3905724)
 
 
 ### Listas de tarefas   
