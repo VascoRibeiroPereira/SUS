@@ -1,27 +1,5 @@
 source("libs_form.R")
 
-
-# define some credentials
-credentials <- data.frame(
-  user = c("sus", "ricardo"), # mandatory
-  password = c("test1", "test2"), # mandatory
-  start = c(NA), # optional (all others)
-  expire = c(NA, NA), # input a date like "2022-12-31"
-  admin = c(TRUE, FALSE),
-  comment = "Simple and secure authentification mechanism 
-  for single ‘Shiny’ applications.",
-  stringsAsFactors = FALSE
-)
-
-key_set("R-shinymanager-key", "obiwankenobi")
-
-create_db(
-  credentials_data = credentials,
-  sqlite_path = "database.sqlite", # will be created
-  passphrase = key_get("R-shinymanager-key", "obiwankenobi")
-  # passphrase = "passphrase_wihtout_keyring"
-)
-
 ui <- dashboardPage(
   
   skin = "red",
@@ -33,6 +11,7 @@ ui <- dashboardPage(
   dashboardSidebar(
     
     sidebarMenu(
+      menuItem("Dashboard", tabName = "dash", icon = icon("bar-chart-o")),
       menuItem("Processamento", tabName = "proc", icon = icon("table")),
       menuItem("Automatismo", tabName = "auto", icon = icon("robot")),
       menuItem("Instruções", tabName = "instr", icon = icon("question-circle")),
@@ -45,7 +24,30 @@ ui <- dashboardPage(
   ## Body content
   dashboardBody(
     tabItems(
-      # First tab content
+      
+      # tab content
+      tabItem(tabName = "dash",
+              h2("Dashboard"),
+              fluidRow(
+                box(
+                  plotlyOutput("balanco"), width = 12
+                )
+              ),
+              
+              fluidRow(
+                box(
+                  plotOutput("gasto")
+                ),
+                box(
+                  plotOutput("receita")
+                )
+              )
+              
+              
+              
+      ),
+      
+      # tab content
       tabItem(tabName = "proc",
               fluidRow(
                 
@@ -74,7 +76,7 @@ ui <- dashboardPage(
               )
       ),
       
-      # Second tab content
+      # tab content
       tabItem(tabName = "auto",
               h2("Tabela de Automatismo"),
               
@@ -85,7 +87,7 @@ ui <- dashboardPage(
               )
       ),
       
-      # Third tab content
+      # tab content
       tabItem(tabName = "instr",
               h2("Instruções desta Ferramenta"),
               
@@ -95,6 +97,7 @@ ui <- dashboardPage(
   ),
   useShinyjs()
 )
+
 
 # Wrap your UI with secure_app
 ui <- secure_app(ui, enable_admin = TRUE)
@@ -106,15 +109,10 @@ server <- function(input, output) {
     check_credentials = check_credentials(
       "database.sqlite",
       passphrase = key_get("R-shinymanager-key", "obiwankenobi")
-      # passphrase = "passphrase_wihtout_keyring"
     )
   )
   
-  output$auth_output <- renderPrint({
-    reactiveValuesToList(res_auth)
-  })
-  
-  
+
   data <- eventReactive(input$gobutton,{
     if(is.null(input$file1)){
       return()
@@ -156,11 +154,11 @@ server <- function(input, output) {
       Shiny.bindAll(table.table().node());")
   )
   
-  selector_CC <- renderPrint({ ## algo aqui esta a correr mal
+  selector_CC <- renderPrint({ 
     str(sapply(1:nrow(data()), function(i) input[[paste0("sel", i)]]))
   })
   
-  selector_R <- renderPrint({ ## algo aqui esta a correr mal
+  selector_R <- renderPrint({ 
     str(sapply(1:nrow(data()), function(i) input[[paste0("sel2", i)]]))
   })
   
@@ -214,7 +212,17 @@ server <- function(input, output) {
     }
   )
   
+  output$balanco <- renderPlotly(
+    balancoPlot
+  )
   
+  output$receita <- renderPlot(
+    receitaPlot
+  )
+  
+  output$gasto <- renderPlot(
+    gastoPlot
+  )
   
   output$auto_cc_r <- renderDT(auto_cc_r,
                                       selection = 'none', editable = FALSE, 
@@ -230,8 +238,7 @@ server <- function(input, output) {
                                       ),
                                       
                                       class = "display"
-    
-  )
+    )
 }
 
 shinyApp(ui, server)
