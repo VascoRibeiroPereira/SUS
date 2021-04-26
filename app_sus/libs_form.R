@@ -19,11 +19,11 @@ gs4_deauth()
 
 ## define some credentials
 credentials <- data.frame(
-        user = c("sus", "direção"), # mandatory
-        password = c("12345", "12345"), # mandatory
+        user = c("sus", "direção", "test"), # mandatory
+        password = c("12345", "12345", "12345"), # mandatory
         start = c(NA), # optional (all others)
-        expire = c(NA, NA), # input a date like "2022-12-31"
-        admin = c(TRUE, FALSE),
+        expire = c(NA, NA, NA), # input a date like "2022-12-31"
+        admin = c(TRUE, FALSE, FALSE),
         comment = "Simple and secure authentification mechanism
   for single ‘Shiny’ applications.",
         stringsAsFactors = FALSE
@@ -59,30 +59,11 @@ contas <- do.call(rbind.data.frame, contas)
 
 ### Formatação dos dados para apresentar graficamente
 
-balancoPlot <- ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
-        theme(plot.title = element_text(hjust = 0.5)) +
-        ylab("Saldo (Euros)") +
-        xlab("Data") +
-        ggtitle("Balanço") +
-        geom_line() + 
-        geom_point()
-
 Contas_Anual_Receita <- contas %>% filter(IMPORTÂNCIA > 0) %>% group_by(CENTRO.DE.CUSTO, year(DATA.MOV.))
 Contas_Anual_Receita <- Contas_Anual_Receita %>% summarise(Valores = sum(IMPORTÂNCIA))
 
-receitaPlot <- ggplot(Contas_Anual_Receita, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) + facet_grid(cols = vars(`year(DATA.MOV.)`)) +
-        geom_bar(stat="identity", width=1, color="white", show.legend = TRUE) +
-        ggtitle("Receita Anual por Centro de Custo") +
-        theme(plot.title = element_text(hjust = 0.5)) + xlab("")
-
 Contas_Anual_Gasto <- contas %>% filter(IMPORTÂNCIA < 0) %>% group_by(CENTRO.DE.CUSTO, year(DATA.MOV.))
 Contas_Anual_Gasto <- Contas_Anual_Gasto %>% summarise(Valores = sum(IMPORTÂNCIA))
-
-gastoPlot <- ggplot(Contas_Anual_Gasto, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) + facet_grid(cols = vars(`year(DATA.MOV.)`)) +
-        geom_bar(stat="identity", width=1, color="white", show.legend = TRUE) +
-        ggtitle("Gasto Anual por Centro de Custo") +
-        theme(plot.title = element_text(hjust = 0.5)) + xlab("")
-
 
 ## Função de automatismo
 

@@ -30,9 +30,16 @@ ui <- dashboardPage(
               h2("Dashboard"),
               fluidRow(
                 box(
+                  sliderInput(inputId = "selectdates", 
+                              label = "Seleção de datas:",
+                              min = as.Date("2020-01-01"),
+                              max = as.Date(Sys.time()),
+                              value = c(as.Date("2020-01-01"), as.Date(Sys.time())), 
+                              step = 1), width = 12),
+                box(
                   plotlyOutput("balanco"), width = 12
                 )
-              ),
+                ),
               
               fluidRow(
                 box(
@@ -213,15 +220,38 @@ server <- function(input, output) {
   )
   
   output$balanco <- renderPlotly(
-    balancoPlot
+
+    contas %>% 
+      filter(DATA.MOV. >= input$selectdates[1] & DATA.MOV. <= input$selectdates[2]) %>% 
+      ggplot(aes(DATA.MOV., SALDO.CONTABILÍSTICO)) +
+            theme(plot.title = element_text(hjust = 0.5)) +
+            ylab("Saldo (Euros)") +
+            xlab("Data") +
+            ggtitle("Balanço") +
+            geom_line() +
+            geom_point()
+    
   )
   
   output$receita <- renderPlot(
-    receitaPlot
+
+    Contas_Anual_Receita %>% 
+      filter(`year(DATA.MOV.)` >= year(input$selectdates[1]) & `year(DATA.MOV.)` <= year(input$selectdates[2])) %>%
+      ggplot(aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) + facet_grid(cols = vars(`year(DATA.MOV.)`)) +
+      geom_bar(stat="identity", width=1, color="white", show.legend = TRUE) +
+      ggtitle("Receita Anual por Centro de Custo") +
+      theme(plot.title = element_text(hjust = 0.5)) + xlab("")
+    
   )
   
   output$gasto <- renderPlot(
-    gastoPlot
+    
+    Contas_Anual_Gasto %>% 
+      filter(`year(DATA.MOV.)` >= year(input$selectdates[1]) & `year(DATA.MOV.)` <= year(input$selectdates[2])) %>%
+      ggplot(aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) + facet_grid(cols = vars(`year(DATA.MOV.)`)) +
+             geom_bar(stat="identity", width=1, color="white", show.legend = TRUE) +
+             ggtitle("Gasto Anual por Centro de Custo") +
+             theme(plot.title = element_text(hjust = 0.5)) + xlab("")
   )
   
   output$auto_cc_r <- renderDT(auto_cc_r,
