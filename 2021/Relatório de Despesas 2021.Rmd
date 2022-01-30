@@ -1,0 +1,292 @@
+---
+title: | 
+        | "Relatório de Despesas da Sociedade União Sintrense - 2021"
+        | 
+author: |
+        | "Vasco Pereira" - Tesoureiro da SUS
+        | "Ricardo Pereira" - Presidente da SUS
+        | sociedadeuniaosintrense@gmail.com
+date: " `r as.Date(Sys.Date())` "
+output:
+  pdf_document:
+    keep_tex: true
+    includes:
+      in_header: header.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{cat, engine.opts = list(file = "header.tex")}
+\renewcommand{\linethickness}{0.05em}
+```
+
+```{r bibliotecas}
+
+# Nome das bibliotecas
+packages <- c("openxlsx", "dplyr", "ggplot2", "lubridate", "gridExtra", "googlesheets4")
+
+# Instalar bibliotecas que não existam
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# Carregar bibliotecas
+invisible(lapply(packages, library, character.only = TRUE))
+
+```
+
+## Introdução
+
+O presente relatório de contas foi gerado por linha de código por programação nos softwares `R 3.6.2` e `R-Studio 1.2.5033`. A utilização destes softwares possibilita uma completa auditoria das contas por parte do conselho fiscal na forma como estas são processadas pela tesouraria. 
+
+Assim é disposto que:
+
+1. O código é reprodutível - qualquer pessoa com o mesmo software e com o presente documento consegue obter os mesmos valores    
+2. O código é auditável - tendo conhecimentos básicos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
+3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software online de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores.    
+
+No presente documento o código foi escondido para facilitar a leitura do mesmo, mas a versão completa, com código pode ser visualizada na seguinte página: [https://rpubs.com/SUSintrense/relatorio2021](https://rpubs.com/SUSintrense/relatorio2021). Nesta página foi adicionada uma propriedade que torna os gráficos interativos. Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
+
+\pagebreak
+
+## Centros de Custo e Rubricas
+
+Na tabela seguinte estão os **Centros de Custo** e as respetivas **Rubricas** aprovadas pela direção para 2021. Estas não sofreram alterações em relação a 2021.
+
+```{r centros de custo e rubricas}
+
+ccRubri <- read_sheet("https://docs.google.com/spreadsheets/d/1lV2z3PpiX3VaskRvJS_l5XpBb2Yf7dYlCX4w8i4NlSM/edit?usp=sharing", col_types = "c")
+colnames(ccRubri) <- c("Centro de Custo", "Rubrica")
+knitr::kable(ccRubri)
+
+```
+
+\pagebreak
+
+## Balanço Anual
+
+```{r importar dados}
+## Importar dados da Cloud
+
+contas <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2021")
+
+```
+
+O ano de 2021 continuou a ser atípico, marcado pela falta da principal fonte de rendimento desta coletividade: a renda da cave, e também pelo estado de emergência devido à COVID19 que vivemos há dois anos que nos limita a realização de atividades como o teatro e alugueres de espaço para eventos particulares.
+
+Apesar de todas as dificuldades enfrentadas, o saldo do ano 2021 foi positivo. Entre 01/01/2021 e 31/12/2021 a Sociedade União Sintrense viu a sua conta crescer em `r contas$SALDO.CONTABILÍSTICO[length(contas$SALDO.CONTABILÍSTICO)] - (contas$SALDO.CONTABILÍSTICO[1]-contas$IMPORTÂNCIA[1])` €.
+
+
+As principais contribuições para o saldo positivo da SUS foram:
+- O recente aluguer do espaço da cave à empresa "Boundless".      
+- O apoio por parte da UFS pelas atividades culturais dinamizadas pela SUS através do incansável Teatro União.    
+
+Apesar dos contratempos e das dificuldades financeiras é evidente pelo gráfico do Balanço de Atividades em 2021 que terminámos o ano de forma positiva, e olhamos para o futuro com positivismo perante a fonte de rendimento estável obtida através do um novo contrato de arrendamento da cave.
+
+```{r gráfico evolução balanço, fig.align="center"}
+
+ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
+        theme(plot.title = element_text(hjust = 0.5)) +
+        ylab("Saldo (Euros)") +
+        xlab("Data") +
+        ggtitle("Balanço 2021") +
+        geom_line() + 
+        geom_point()
+
+```
+
+\pagebreak
+
+## Gasto/Receita por Centro de Custo Anual    
+
+```{r gráficos circulares - gastos anuais por CC }
+
+Contas_Anual_Receita <- contas %>% filter(IMPORTÂNCIA > 0) %>% group_by(CENTRO.DE.CUSTO)
+Contas_Anual_Receita <- Contas_Anual_Receita %>% summarise(Valores = sum(IMPORTÂNCIA)) 
+
+Contas_Anual_Gasto <- contas %>% filter(IMPORTÂNCIA < 0) %>% group_by(CENTRO.DE.CUSTO)
+Contas_Anual_Gasto <- Contas_Anual_Gasto %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+receita <- ggplot(Contas_Anual_Receita, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) +
+        geom_bar(stat="identity", width=1, color="white") +
+        ggtitle("Receita Anual por Centro de Custo") +
+        coord_polar("y", start=0) + theme(legend.position="bottom", legend.title=element_blank(), panel.border = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.ticks = element_blank(), 
+          axis.text = element_blank(),
+          legend.direction = "vertical")
+
+gasto <- ggplot(Contas_Anual_Gasto, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) +
+        geom_bar(stat="identity", width=1, color="white") +
+        ggtitle("Gasto Anual por Centro de Custo") +
+        coord_polar("y", start=0) + theme(legend.position="bottom", legend.title=element_blank(), panel.border = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.ticks = element_blank(), 
+          axis.text = element_blank(),
+          legend.direction = "vertical")
+```
+
+As seguintes tabelas e respetivos gráficos sumarizam a contribuição de Gastos e de Receitas anual por cada **Centro de Custo**.
+
+```{r tabelas gastos anuais por CC }
+colnames(Contas_Anual_Receita) <- c("Centro de Custo", "Valor (euros)")
+colnames(Contas_Anual_Gasto) <- c("Centro de Custo", "Valor (euros)")
+knitr::kable(Contas_Anual_Gasto)
+knitr::kable(Contas_Anual_Receita)
+```
+
+
+```{r gráficos anuais por CC }
+grid.arrange(gasto, receita, nrow=1, ncol=2)
+```
+
+A nível percentual é evidente que as **Instalações** representam a esmagadora maioria dos gastos no entanto, no ano de 2021, houve uma significativa contribuição de receita através de apoios para o **Teatro União** que contribuíram para a sustentabilidade financeira da Sociedade União Sintrense.
+
+\pagebreak
+
+### Balanço dos Centros de Custo
+
+Na seguinte tabela faz-se um balanço anual dos **Centros de Custo**. Valores negativos indicam **Centros de Custo** que terminam o ano com saldo negativo e valores positivos indicam **Centros de Custo** que terminaram o ano com receita.
+
+```{r tabela geral por CC - evolução anual}
+
+Contas_Anual <- contas %>% group_by(CENTRO.DE.CUSTO)
+Contas_Anual <- Contas_Anual %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+totalAnual <- tibble(CENTRO.DE.CUSTO = "**TOTAL**", Valores = sum(Contas_Anual$Valores))
+
+Contas_Anual_final <- bind_rows(Contas_Anual, totalAnual)
+colnames(Contas_Anual_final) <- c("Centro de Custo", "Valor (euros)")
+
+knitr::kable(Contas_Anual_final)
+
+```
+
+Desta tabela de balanço podemos concluir que embora, como anteriormente demonstrado, as **Instalações** sejam o **Centro de Custo** com valores mais avultados de lucro são também as que mais produzem gastos, sendo que a receita do **Teatro União** teve um papel fundamental no saldo positivo do ano de 2021.
+
+\pagebreak
+
+## Gasto/Receita por Centro de Custo por Mês
+
+Na seguinte tabela apresentamos o Gasto e a Receita por **Centro de Custo** em cada mês. Neste, tal como nas **Rubricas** demonstrado de seguida, destaca-se o maior movimento de Valores no **Centro de Custo** das **Instalações** como é de esperar, dado que manter um edifício das dimensões da SUS acarreta a muita despesa de manutenção.
+
+```{r tabela geral por CC - evolução mensal}
+
+Contas_Mês <- contas %>% group_by(CENTRO.DE.CUSTO, Mês)
+Balanco_Mês <- Contas_Mês %>% summarise(Valores = sum(IMPORTÂNCIA)) %>% arrange(Mês)
+Balanco_Mês <- Balanco_Mês[,c(2,1,3)] 
+
+Balanco_Mês_Label <- Balanco_Mês
+Balanco_Mês_Label$Mês <- month(Balanco_Mês_Label$Mês, label = TRUE)
+colnames(Balanco_Mês_Label) <- c("Mês", "Centro de Custo", "Valor (euros)")
+
+knitr::kable(Balanco_Mês_Label)
+
+```
+
+Esta tabela permite-nos ainda compreender a importância das atividades do Teatro União para a subsistência da SUS. As transações de Maio e Novembro impactaram positiva e significativamente o centro de custo do **Teatro**. Adicionalmente, as transações positivas para o centro de custo das **Instalações** nos meses de Maio e Outubro foram devidas ao pagamento de um seguro devido a danos causados nas intalações por inundação (provocada por agentes externos à SUS), e devido à primeira renda da cave, respetivamente.
+
+\pagebreak
+
+A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreensão da evolução de Gasto e Receita ao longo do ano 2020 de forma gráfica.
+
+Nota-se uma clara quebra de todas as atividades no inicio do ano devido à situação pandémica que vivemos, daí este gráfico ter um significado maior para o **Centro de Custo** das **Instalações** do que dos demais.
+
+```{r gráfico evolução mensal, fig.align="center", fig.width=10, fig.height=5}
+
+ggplot(Balanco_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) + 
+        theme(plot.title = element_text(hjust = 0.5)) +
+        ylab("Valores (Euros)") +
+        ggtitle("Evolução de gastos e receita por centro de custo \n com base mensal") +
+        guides(color=guide_legend(title="Centro de Custo")) +
+        geom_line() + 
+        geom_point() + scale_x_continuous(limits = c(1, 12), breaks = 1:12)
+
+```
+
+\pagebreak
+
+## Gasto/Receita por Rubrica
+
+Na seguinte tabela apresentamos o Gasto e a Receita por **Rubrica** no ano 2021. Destaca-se novamente o centro de custo das **Instalações** em especial os valores de **Seguros** pela positiva e o **CONSUMO ELECTRICIDADE** pela negativa.
+
+```{r tabela geral por rubrica}
+
+contas_ <- contas %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
+Balanco <- contas_ %>% summarise(Valores = sum(IMPORTÂNCIA))
+colnames(Balanco) <- c("Centro de Custo", "Rubrica", "Valor (euros)")
+
+knitr::kable(Balanco)
+
+```
+
+```{r eletricidade}
+
+contas2020 <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2020")
+contas_2020 <- contas2020 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
+Balanco2020 <- contas_2020 %>% summarise(Valores = sum(IMPORTÂNCIA))
+colnames(Balanco2020) <- c("Centro de Custo", "Rubrica", "Valor (euros)")
+
+```
+
+
+Ainda em relação ao consumo de eletricidade destaca-se uma melhoria quando comparado ao ano de 2020: `r as.numeric(Balanco2020[grep("CONSUMO ELECTRICIDADE", Balanco2020$Rubrica),3])`€ em 2020 contra `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])`€ em 2021, representando uma poupança de `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])-as.numeric(Balanco2020[grep("CONSUMO ELECTRICIDADE", Balanco2020$Rubrica),3])`€.
+
+\pagebreak
+
+A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreensão da evolução de Gasto e Receita ao longo para cada **Rubrica** e **Centro de Custo** de forma gráfica.
+
+```{r balanço por Rubrica e CC, fig.align="center", fig.height = 12, fig.width=10}
+
+colnames(Balanco) <- c("CENTRO.DE.CUSTO", "RUBRICA", "Valores")
+
+ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() + 
+        theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, size = 10),
+              axis.ticks.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+              panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="right",
+              legend.direction = "vertical") +
+        ylab("Valores (Euros)") +
+        xlab("Rubrica") +
+        ggtitle("Balanço por Rubrica e por Centro de Custo") +
+        guides(color=guide_legend(title="Centro de Custo")) +
+        geom_hline(yintercept = 0, size = .2, color = "grey") +
+        guides(color=guide_legend(title="Centro de Custo"))
+```
+
+\pagebreak
+
+
+
+## A Direção
+
+\vspace{80pt}
+
+___
+
+\begin{center}
+
+Data e Assinatura
+
+\end{center}
+
+
+## O Conselho Fiscal
+
+\vspace{80pt}
+
+___
+
+\begin{center}
+
+Data e Assinatura
+
+\end{center}
