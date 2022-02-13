@@ -1,0 +1,207 @@
+---
+title: "Plano Estratégico"
+author: "Vasco Pereira"
+date: "`r as.Date(Sys.time())`"
+output:
+  pdf_document:
+    keep_tex: true
+    includes:
+      in_header: header.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+```
+
+```{cat, engine.opts = list(file = "header.tex")}
+\renewcommand{\linethickness}{0.05em}
+```
+
+## O que é o Plano Estratégico 
+
+O Plano Estratégico (PE) é um plano a longo prazo para a implementação de melhorias na SUS por forma a esta aumentar a sua capacidade de sustentabilidade e longevidade face às dificuldades inerentes à evolução social. Sendo uma coletividade nascida em 1877, a SUS já atravessou monarquias, ditaduras, duas pandemias virais (1920 e 2020), a presença e ausência de moradores (implicando a drástica redução de sócios atualmente - 2022). Já se atravessaram momentos dificeis, como derrocadas na prórpia sede, e momentos mais prósperos.
+
+O plano completo e em mutação conforme as necessidades o implicarem pode ser consultado na nossa drive em: [PE](https://docs.google.com/document/d/1kXc2k4UWPusVrfWMdYjRdWl646QRQDKt_nVB_pibd7g/edit?usp=sharing).
+
+
+```{r bibliotecas}
+
+# Nome das bibliotecas
+packages <- c("openxlsx", "dplyr", "ggplot2", "lubridate", "gridExtra", "googlesheets4", "knitr", "rmarkdown")
+
+# Instalar bibliotecas que não existam
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# Carregar bibliotecas
+invisible(lapply(packages, library, character.only = TRUE))
+
+```
+
+```{r importar dados}
+## Importar dados da Cloud
+
+contas2020 <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2020")
+contas2021 <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2021")
+
+```
+
+```{r dadosTabelados }
+
+receita2020 <- contas2020 %>% filter(IMPORTÂNCIA > 0) %>% group_by(CENTRO.DE.CUSTO)
+receita2020 <- receita2020 %>% summarise(Valores = sum(IMPORTÂNCIA)) 
+
+gasto2020 <- contas2020 %>% filter(IMPORTÂNCIA < 0) %>% group_by(CENTRO.DE.CUSTO)
+gasto2020 <- gasto2020 %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+B2020 <- full_join(receita2020, gasto2020, by = "CENTRO.DE.CUSTO")
+B2020$Ano <- 2020
+
+receita2021 <- contas2021 %>% filter(IMPORTÂNCIA > 0) %>% group_by(CENTRO.DE.CUSTO)
+receita2021 <- receita2021 %>% summarise(Valores = sum(IMPORTÂNCIA)) 
+
+gasto2021 <- contas2021 %>% filter(IMPORTÂNCIA < 0) %>% group_by(CENTRO.DE.CUSTO)
+gasto2021 <- gasto2021 %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+B2021 <- full_join(receita2021, gasto2021, by = "CENTRO.DE.CUSTO")
+B2021$Ano <- 2021
+
+yearB <- bind_rows(B2020, B2021)
+
+colnames(yearB) <- c("cc", "money.in", "money.out", "year")
+
+
+yearB[is.na(yearB)] = 0
+yearB <- yearB %>% mutate(balance = money.in + money.out)
+
+predictYearRaw <- yearB %>% group_by(cc) %>% summarize(money.in = mean(money.in), money.out = mean(money.out))
+
+# Previsão2022
+
+predictYear2022 <- predictYearRaw
+
+# Renda de Maio a Dezembro = 8*1000€ = 8000€
+# 10000€ de renda em atraso penhorada ao antigo inquilino
+# 600€ limpeza da sede
+
+# Aluguer de sala para Yoga da semana 6 à 52 (menos 2 semanas necessárias ao Baile) = 10€ * 2horas * 2vezes por semana * 44 = 1760€
+
+predictYear2022[grep("INSTALAÇÕES", predictYear2022$cc),]$money.in <- (8000 + 1760 + 10000 - 600)
+
+predictYear2022[grep("NOITE DAS CAMÉLIAS", predictYear2022$cc),]$money.out <- -2500
+
+predictYear2022$year <- 2022
+
+# Previsão2023
+
+predictYear2023 <- predictYearRaw
+
+# Renda = 8*1250 + 4*1000 = 14000
+
+# Limpeza = 660
+
+# Aluguer de sala para Yoga da semana 1 à 52 (menos 2 semanas necessárias ao Baile) = 12 * 2horas * 2vezes por semana * 50 = 2400
+
+predictYear2023[grep("INSTALAÇÕES", predictYear2023$cc),]$money.in <- (14000 + 2400 - 660)
+
+predictYear2023[grep("NOITE DAS CAMÉLIAS", predictYear2023$cc),]$money.out <- -2500
+
+predictYear2023$year <- 2023
+
+# Previsão2024
+
+predictYear2024 <- predictYearRaw
+
+# Renda = 4*1250 + 8*1500 = 17000
+
+# Limpeza = 720
+
+# Aluguer de sala para Yoga da semana 1 à 52 (menos 2 semanas necessárias ao Baile) = 15 * 2horas * 2vezes por semana * 50 = 3000
+
+predictYear2024[grep("INSTALAÇÕES", predictYear2024$cc),]$money.in <- (17000 + 3000 - 720)
+
+predictYear2024[grep("NOITE DAS CAMÉLIAS", predictYear2024$cc),]$money.out <- -2500
+
+predictYear2024$year <- 2024
+
+# Previsão2025
+
+predictYear2025 <- predictYearRaw
+
+# Renda = 4*1500 + 8*1750 = 20000
+
+# Limpeza = 780
+
+# Aluguer de sala para Yoga da semana 1 à 52 (menos 2 semanas necessárias ao Baile) = 15 * 2horas * 2vezes por semana * 50 = 3000
+
+predictYear2025[grep("INSTALAÇÕES", predictYear2025$cc),]$money.in <- (20000 + 3000 - 780)
+
+predictYear2025[grep("NOITE DAS CAMÉLIAS", predictYear2025$cc),]$money.out <- -2500
+
+predictYear2025$year <- 2025
+
+
+### Bind the tables to check evolution
+
+yearB_pred <- bind_rows(yearB, predictYear2022, predictYear2023, predictYear2024, predictYear2025)
+
+yearB_pred <- yearB_pred %>% mutate(balance = money.in + money.out) %>% group_by(year) %>% summarise(balance = sum(balance))
+
+yearB_pred$year <- as.factor(yearB_pred$year)
+
+```
+
+## Previsão de Balanço até 2025
+
+Com o arrendamento do espaço da cave da sede da SUS, planeamento de limpeza regular do espaço e planeamento (ainda embrionário) da cedência do salão nobre para atividades com a comunidade em troca de um donativo à SUS, e com o conhecimento das despesas ao longo de 2020 e 2021, efectuámos um plano de previsão do crescimento das contas da SUS por forma a gerir os investimentos em obras.
+
+Para as previsões considerou-se que:
+
+ - As despesas médias de 2020/2021 seriam acrescidas de despesa de limpeza com valores revistos anualmente
+ 
+ - Previsão de 2022:            
+        - Renda de Maio a Dezembro = 8x1000 = 8000€             
+        - 10000€ de renda em atraso penhorada ao antigo inquilino               
+        - 600€ limpeza da sede          
+        - Cedência do salão 44 semanas (Yoga)  = 10€ x 2horas x 2vezes por semana x 44 = 1760€          
+        
+ - Previsão de 2023:            
+        - Renda = 8x1250 + 4x1000 = 14000€              
+        - 660€ limpeza da sede          
+        - Cedência do salão 50 semanas (Yoga)  = 12€ x 2horas x 2vezes por semana x 50 = 2400€          
+        
+        
+ - Previsão de 2024:            
+        - Renda = 4x1250 + 8x1500 = 17000€              
+        - 720€ limpeza da sede          
+        - Cedência do salão 50 semanas (Yoga)  = 15€ x 2horas x 2vezes por semana x 50 = 3000€          
+        
+ - Previsão de 2025:            
+        - Renda = 4x1500 + 8x1750 = 20000€              
+        - 780€ limpeza da sede          
+        - Cedência do salão 50 semanas (Yoga)  = 15€ x 2horas x 2vezes por semana x 50 = 3000€          
+
+O balanço das contas da SUS por ano pode ser consultado no seguinte gráfico:
+
+```{r incomeGraph}
+
+yearB_pred %>% ggplot(aes(year, balance)) + geom_col() + geom_line(aes(group = 1))
+
+
+```
+
+Note-se que em 2022 espera-se a entrada de rendas em atraso de 2020 ainda por serem penhoradas, pelo que isto representará um salto superior ao esperado nesse ano.
+
+Tabela com os balanços previstos no gráfico.
+
+```{r tabela}
+
+knitr::kable(yearB_pred)
+
+```
+
+Espera-se um valor acumulado de 2023 em diante de `r format(sum(yearB_pred$balance[3:nrow(yearB_pred)]), scientific = FALSE)`€. Este pode ser investido mediante as prioridades estabelecidas no plano de desenvolvimento.
+
+O presente relatório é preditivo e irá mudar à medida que mais dados se obtenham com contratos de utilização do espaço e com novos relatórios de contas anuais.
