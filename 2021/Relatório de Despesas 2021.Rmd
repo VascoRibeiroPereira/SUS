@@ -25,7 +25,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 ```{r bibliotecas}
 
 # Nome das bibliotecas
-packages <- c("openxlsx", "dplyr", "ggplot2", "lubridate", "gridExtra", "googlesheets4")
+packages <- c("openxlsx", "dplyr", "ggplot2", "lubridate", "gridExtra", "googlesheets4", "knitr", "rmarkdown")
 
 # Instalar bibliotecas que não existam
 installed_packages <- packages %in% rownames(installed.packages())
@@ -193,7 +193,7 @@ knitr::kable(Balanco_Mês_Label)
 
 ```
 
-Esta tabela permite-nos ainda compreender a importância das atividades do Teatro União para a subsistência da SUS. As transações de Maio e Novembro impactaram positiva e significativamente o centro de custo do **Teatro**. Adicionalmente, as transações positivas para o centro de custo das **Instalações** nos meses de Maio e Outubro foram devidas ao pagamento de um seguro devido a danos causados nas intalações por inundação (provocada por agentes externos à SUS), e devido à primeira renda da cave, respetivamente.
+Esta tabela permite-nos ainda compreender a importância das atividades do Teatro União para a subsistência da SUS. As transações de Maio e Novembro impactaram positiva e significativamente o **Centro de Custo** do **Teatro**. Adicionalmente, as transações positivas para o **Centro de Custo** das **Instalações** nos meses de Maio e Outubro foram devidas ao pagamento de um seguro devido a danos causados nas intalações por inundação (provocada por agentes externos à SUS), e devido à primeira renda da cave, respetivamente.
 
 \pagebreak
 
@@ -217,7 +217,7 @@ ggplot(Balanco_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) +
 
 ## Gasto/Receita por Rubrica
 
-Na seguinte tabela apresentamos o Gasto e a Receita por **Rubrica** no ano 2021. Destaca-se novamente o centro de custo das **Instalações** em especial os valores de **Seguros** pela positiva e o **CONSUMO ELECTRICIDADE** pela negativa.
+Na seguinte tabela apresentamos o Gasto e a Receita por **Rubrica** no ano 2021. Destaca-se novamente o centro de custo das **Instalações** em especial os valores de **SEGUROS** pela positiva e o **CONSUMO ELECTRICIDADE** pela negativa.
 
 ```{r tabela geral por rubrica}
 
@@ -229,7 +229,7 @@ knitr::kable(Balanco)
 
 ```
 
-```{r eletricidade}
+```{r anoAnterior}
 
 contas2020 <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2020")
 contas_2020 <- contas2020 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
@@ -239,11 +239,33 @@ colnames(Balanco2020) <- c("Centro de Custo", "Rubrica", "Valor (euros)")
 ```
 
 
+\pagebreak
+
+### Gasto/Receita por Rubrica - Evolução
+
+A seguinte tabela sumariza a evolução dos gastos e receitas por **Centro de Custo** e por **Rubrica** do ano de 2020 para 2021.
+
+```{r evolucao}
+
+evol <- right_join(Balanco2020, Balanco, by = c("Centro de Custo", "Rubrica"))
+names(evol)[c(3,4)] <- c("Valor (€) 2020", "Valor (€) 2021")
+
+evol$`Valor (€) 2020`[is.na(evol$`Valor (€) 2020`)] <- 0
+
+evol <- evol %>% mutate("Diferença" = - `Valor (€) 2020` + `Valor (€) 2021`)
+
+knitr::kable(evol)
+
+```
+
+
+A **Rubrica** cuja evolução negativa se destacou foi a `r paste(evol$"Centro de Custo"[which.min(evol$Diferença)], "-", evol$Rubrica[which.min(evol$Diferença)])` devido à saída do inquilino anterior, e a **Rubrica** com maior evolução positiva foi `r paste(evol$"Centro de Custo"[which.max(evol$Diferença)], "-", evol$Rubrica[which.max(evol$Diferença)])`, pelo apoio da União das Freguesias de Sintra às atividades culturais desenvolvidas pelo Teatro União.
+
 Ainda em relação ao consumo de eletricidade destaca-se uma melhoria quando comparado ao ano de 2020: `r as.numeric(Balanco2020[grep("CONSUMO ELECTRICIDADE", Balanco2020$Rubrica),3])`€ em 2020 contra `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])`€ em 2021, representando uma poupança de `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])-as.numeric(Balanco2020[grep("CONSUMO ELECTRICIDADE", Balanco2020$Rubrica),3])`€.
 
 \pagebreak
 
-A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreensão da evolução de Gasto e Receita ao longo para cada **Rubrica** e **Centro de Custo** de forma gráfica.
+A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreensão da evolução de Gasto e Receita ao longo para cada **Rubrica** e **Centro de Custo** de forma gráfica para 2021.
 
 ```{r balanço por Rubrica e CC, fig.align="center", fig.height = 12, fig.width=10}
 

@@ -1,0 +1,12 @@
+name: SUS_CC_R
+title: SUS_CC_R
+username:
+account: socieadeuniaosintrense
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3905724
+bundleId: 4520102
+url: https://socieadeuniaosintrense.shinyapps.io/SUS_CC_R/
+when: 1619435158.66274
+asMultiple: FALSE
+asStatic: FALSE
