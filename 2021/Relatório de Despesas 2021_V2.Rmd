@@ -40,15 +40,14 @@ invisible(lapply(packages, library, character.only = TRUE))
 
 ## Introdução
 
-O presente relatório de contas foi gerado por linha de código por programação nos softwares `R 3.6.2` e `R-Studio 1.2.5033`. A utilização destes softwares possibilita uma completa auditoria das contas por parte do conselho fiscal na forma como estas são processadas pela tesouraria. 
+O presente relatório procura espelhar de forma elucidativa o que foi a vida da coletividade no decorrer do ano de 2021 evidenciando os acontecimentos mais relevantes e a expressão que os mesmos representam na gestão anual de uma coletividade.
+Este modelo de relatório é reformulado, em comparação a modelos anteriores, para permitir uma análise mais clara, direta e com uma maior transparência entre elementos que elaboram o documento e os sócios que o analisam.
 
-Assim é disposto que:
+Procura-se que esta análise possa ser sobejamente exemplificativa das boas práticas aplicadas e que as despesas estejam alocadas de forma correta, precisa e com as descriminações corretas.
 
-1. O código é reprodutível - qualquer pessoa com o mesmo software e com o presente documento consegue obter os mesmos valores    
-2. O código é auditável - tendo conhecimentos básicos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
-3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software online de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores.    
+Este relatório constitui uma ferramenta de registo mas, muito além disso, pretende que ele próprio tenha sido criado como uma ferramenta que nos auxiliará no processo de análise e previsão. Dessa forma, mais facilmente poderemos definir quais as linhas financeiras que vão orientar e estabelecer o percurso do exercício de funções do ano seguinte.
 
-No presente documento o código foi escondido para facilitar a leitura do mesmo, mas a versão completa, com código pode ser visualizada na seguinte página: [https://rpubs.com/SUSintrense/relatorio2021](https://rpubs.com/SUSintrense/relatorio2021). Nesta página foi adicionada uma propriedade que torna os gráficos interativos. Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
+Esta análise da totalidade dos documentos contabilísticos procura estar de acordo com as linhas estabelecidas entre a Direção e o Conselho Fiscal de maneira a que possam exprimir de forma verdadeira a atividade financeira da Sociedade União Sintrense no ano de 2021 e a situação patrimonial no final do período correspondente.
 
 \pagebreak
 
@@ -80,7 +79,7 @@ O ano de 2021 continuou a ser atípico, marcado pela falta da principal fonte de
 Apesar de todas as dificuldades enfrentadas, o saldo do ano 2021 foi positivo. Entre 01/01/2021 e 31/12/2021 a Sociedade União Sintrense viu a sua conta crescer em `r contas$SALDO.CONTABILÍSTICO[length(contas$SALDO.CONTABILÍSTICO)] - (contas$SALDO.CONTABILÍSTICO[1]-contas$IMPORTÂNCIA[1])` €.
 
 
-As principais contribuições para o saldo positivo da SUS foram:
+As principais contribuições para o saldo positivo da SUS foram:         
 - O recente aluguer do espaço da cave à empresa "Boundless".      
 - O apoio por parte da UFS pelas atividades culturais dinamizadas pela SUS através do incansável Teatro União.    
 
@@ -88,19 +87,22 @@ Apesar dos contratempos e das dificuldades financeiras é evidente pelo gráfico
 
 ```{r gráfico evolução balanço, fig.align="center"}
 
-ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
+g_plot = contas %>% ggplot(aes(DATA.MOV., SALDO.CONTABILÍSTICO))
+
+g_plot + geom_line(color = "grey") + 
+        geom_point(aes(color = SALDO.CONTABILÍSTICO), size = 3) +
+  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"), name = "Saldo") +
+  theme(legend.position = "right") + 
         theme(plot.title = element_text(hjust = 0.5)) +
         ylab("Saldo (Euros)") +
         xlab("Data") +
-        ggtitle("Balanço 2021") +
-        geom_line() + 
-        geom_point()
+        ggtitle("Balanço 2021")
 
 ```
 
 \pagebreak
 
-## Gasto/Receita por Centro de Custo Anual    
+## Gasto e Receita por Centro de Custo em 2021  
 
 ```{r gráficos circulares - gastos anuais por CC }
 
@@ -108,31 +110,42 @@ Contas_Anual_Receita <- contas %>% filter(IMPORTÂNCIA > 0) %>% group_by(CENTRO.
 Contas_Anual_Receita <- Contas_Anual_Receita %>% summarise(Valores = sum(IMPORTÂNCIA)) 
 
 Contas_Anual_Gasto <- contas %>% filter(IMPORTÂNCIA < 0) %>% group_by(CENTRO.DE.CUSTO)
-Contas_Anual_Gasto <- Contas_Anual_Gasto %>% summarise(Valores = sum(IMPORTÂNCIA))
+Contas_Anual_Gasto <- Contas_Anual_Gasto %>% summarise(Valores = sum(IMPORTÂNCIA)*(-1))
 
-receita <- ggplot(Contas_Anual_Receita, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) +
-        geom_bar(stat="identity", width=1, color="white") +
+## receita
+
+Contas_Anual_Receita$fraction = Contas_Anual_Receita$Valores / sum(Contas_Anual_Receita$Valores) # Compute percentages
+Contas_Anual_Receita$ymax = cumsum(Contas_Anual_Receita$fraction) # Compute the cumulative percentages (top of each rectangle)
+Contas_Anual_Receita$ymin = c(0, head(Contas_Anual_Receita$ymax, n=-1)) # Compute the bottom of each rectangle
+names(Contas_Anual_Receita)[1] = "Centro de Custo"
+
+# Make the plot
+receita <- Contas_Anual_Receita %>% 
+        ggplot(aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=`Centro de Custo`)) +
+        geom_rect() +
         ggtitle("Receita Anual por Centro de Custo") +
-        coord_polar("y", start=0) + theme(legend.position="bottom", legend.title=element_blank(), panel.border = element_blank(),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          panel.background = element_blank(),
-          axis.title = element_blank(),
-          axis.ticks = element_blank(), 
-          axis.text = element_blank(),
-          legend.direction = "vertical")
+        scale_fill_brewer(palette=4) +
+        coord_polar(theta="y") +
+        xlim(c(2, 4)) +
+        theme_void()
 
-gasto <- ggplot(Contas_Anual_Gasto, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) +
-        geom_bar(stat="identity", width=1, color="white") +
+## despesa
+
+Contas_Anual_Gasto$fraction = Contas_Anual_Gasto$Valores / sum(Contas_Anual_Gasto$Valores) # Compute percentages
+Contas_Anual_Gasto$ymax = cumsum(Contas_Anual_Gasto$fraction) # Compute the cumulative percentages (top of each rectangle)
+Contas_Anual_Gasto$ymin = c(0, head(Contas_Anual_Gasto$ymax, n=-1)) # Compute the bottom of each rectangle
+names(Contas_Anual_Gasto)[1] = "Centro de Custo"
+
+# Make the plot
+gasto <- Contas_Anual_Gasto %>% 
+        ggplot(aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=`Centro de Custo`)) +
+        geom_rect() +
         ggtitle("Gasto Anual por Centro de Custo") +
-        coord_polar("y", start=0) + theme(legend.position="bottom", legend.title=element_blank(), panel.border = element_blank(),
-          panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank(),
-          panel.background = element_blank(),
-          axis.title = element_blank(),
-          axis.ticks = element_blank(), 
-          axis.text = element_blank(),
-          legend.direction = "vertical")
+        scale_fill_brewer(palette=4) +
+        coord_polar(theta="y") +
+        xlim(c(2, 4)) +
+        theme_void()
+
 ```
 
 As seguintes tabelas e respetivos gráficos sumarizam a contribuição de Gastos e de Receitas anual por cada **Centro de Custo**.
@@ -140,13 +153,16 @@ As seguintes tabelas e respetivos gráficos sumarizam a contribuição de Gastos
 ```{r tabelas gastos anuais por CC }
 colnames(Contas_Anual_Receita) <- c("Centro de Custo", "Valor (euros)")
 colnames(Contas_Anual_Gasto) <- c("Centro de Custo", "Valor (euros)")
-knitr::kable(Contas_Anual_Gasto)
-knitr::kable(Contas_Anual_Receita)
+knitr::kable(Contas_Anual_Gasto[,1:2])
+knitr::kable(Contas_Anual_Receita[,1:2])
 ```
 
 
 ```{r gráficos anuais por CC }
-grid.arrange(gasto, receita, nrow=1, ncol=2)
+#grid.arrange(gasto, receita, nrow=1, ncol=2)
+gasto
+
+receita
 ```
 
 A nível percentual é evidente que as **Instalações** representam a esmagadora maioria dos gastos no entanto, no ano de 2021, houve uma significativa contribuição de receita através de apoios para o **Teatro União** que contribuíram para a sustentabilidade financeira da Sociedade União Sintrense.
@@ -177,7 +193,7 @@ Desta tabela de balanço podemos concluir que embora, como anteriormente demonst
 
 ## Gasto/Receita por Centro de Custo por Mês
 
-Na seguinte tabela apresentamos o Gasto e a Receita por **Centro de Custo** em cada mês. Neste, tal como nas **Rubricas** demonstrado de seguida, destaca-se o maior movimento de Valores no **Centro de Custo** das **Instalações** como é de esperar, dado que manter um edifício das dimensões da SUS acarreta a muita despesa de manutenção.
+Na seguinte tabela apresentamos o Gasto e a Receita por **Centro de Custo** em cada mês. Neste, tal como nas **Rubricas** demonstrado de seguida, destaca-se o maior movimento de Valores no **Centro de Custo** das **Instalações** como é de esperar, dado que manter um edifício das dimensões da SUS acarreta a muitas despesas de manutenção.
 
 ```{r tabela geral por CC - evolução mensal}
 
@@ -201,15 +217,17 @@ A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreens�
 
 Nota-se uma clara quebra de todas as atividades no inicio do ano devido à situação pandémica que vivemos, daí este gráfico ter um significado maior para o **Centro de Custo** das **Instalações** do que dos demais.
 
+**Balanço por centro de custo com base mensal**
+
 ```{r gráfico evolução mensal, fig.align="center", fig.width=10, fig.height=5}
 
-ggplot(Balanco_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) + 
+Balanco_Mês %>% ggplot(aes(Mês, Valores, color = CENTRO.DE.CUSTO)) + 
         theme(plot.title = element_text(hjust = 0.5)) +
         ylab("Valores (Euros)") +
-        ggtitle("Evolução de gastos e receita por centro de custo \n com base mensal") +
         guides(color=guide_legend(title="Centro de Custo")) +
         geom_line() + 
-        geom_point() + scale_x_continuous(limits = c(1, 12), breaks = 1:12)
+        geom_point(size = 5, alpha = .5) + scale_x_continuous(limits = c(1, 12), breaks = 1:12) +
+        theme_minimal()
 
 ```
 
@@ -269,9 +287,9 @@ A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreens�
 
 ```{r balanço por Rubrica e CC, fig.align="center", fig.height = 12, fig.width=10}
 
-colnames(Balanco) <- c("CENTRO.DE.CUSTO", "RUBRICA", "Valores")
+colnames(Balanco) <- c("Centro de Custo", "RUBRICA", "Valores")
 
-ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() + 
+Balanco %>% ggplot(aes(RUBRICA, Valores, fill = `Centro de Custo`)) + geom_col() + 
         theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, size = 10),
               axis.ticks.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
               panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="right",
@@ -281,12 +299,26 @@ ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() +
         ggtitle("Balanço por Rubrica e por Centro de Custo") +
         guides(color=guide_legend(title="Centro de Custo")) +
         geom_hline(yintercept = 0, size = .2, color = "grey") +
-        guides(color=guide_legend(title="Centro de Custo"))
+        guides(color=guide_legend(title="Centro de Custo")) + 
+        scale_fill_brewer(palette="RdBu")
 ```
 
 \pagebreak
 
+### Notas finais sobre a execução do relatório de despesas
 
+O presente relatório de contas foi gerado por linha de código por programação nos softwares `R 4.2.1` e `RStudio 2022.02.3+492`. A utilização destes softwares possibilita uma completa auditoria das contas por parte do conselho fiscal na forma como estas são processadas pela tesouraria. 
+
+Assim é disposto que:
+
+1. O código é reprodutível - qualquer pessoa com o mesmo software e com o presente documento consegue obter os mesmos valores    
+2. O código é auditável - tendo conhecimentos básicos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
+3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software online de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores.    
+
+No presente documento o código foi escondido para facilitar a leitura do mesmo, mas a versão completa, com código pode ser visualizada na seguinte página: [https://rpubs.com/SUSintrense/relatorio2021](https://rpubs.com/SUSintrense/relatorio2021). Nesta página foi adicionada uma propriedade que torna os gráficos interativos. Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
+
+
+\pagebreak
 
 ## A Direção
 
