@@ -2,7 +2,7 @@ source("libs_form.R")
 
 ui <- dashboardPage(
   
-  skin = "red",
+  skin = "yellow",
   
   
   dashboardHeader(title = "Estudo Financeiro SUS"
@@ -107,17 +107,17 @@ ui <- dashboardPage(
 
 
 # Wrap your UI with secure_app
-ui <- secure_app(ui, enable_admin = TRUE)
+#ui <- secure_app(ui, enable_admin = TRUE)
 
 server <- function(input, output) {
   
   # check_credentials directly on sqlite db
-  res_auth <- secure_server(
-    check_credentials = check_credentials(
-      "database.sqlite",
-      passphrase = key_get("R-shinymanager-key", "obiwankenobi")
-    )
-  )
+  # res_auth <- secure_server(
+  #   check_credentials = check_credentials(
+  #     "database.sqlite",
+  #     passphrase = key_get("R-shinymanager-key", "obiwankenobi")
+  #   )
+  # )
   
 
   data <- eventReactive(input$gobutton,{

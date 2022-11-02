@@ -5,8 +5,9 @@ account: socieadeuniaosintrense
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3905724
-bundleId: 4520102
+bundleId: 6469289
 url: https://socieadeuniaosintrense.shinyapps.io/SUS_CC_R/
-when: 1619435158.66274
+when: 1667429945.66362
+lastSyncTime: 1667429945.66363
 asMultiple: FALSE
 asStatic: FALSE

@@ -3,7 +3,7 @@
 library(shiny)
 library(DT)
 library(shinymanager)
-library(keyring)
+#library(keyring)
 library(dplyr)
 library(lubridate)
 library(stringr)
@@ -18,25 +18,26 @@ gs4_deauth()
 # Launch database
 
 ## define some credentials
-credentials <- data.frame(
-        user = c("sus", "direção", "test"), # mandatory
-        password = c("12345", "12345", "12345"), # mandatory
-        start = c(NA), # optional (all others)
-        expire = c(NA, NA, NA), # input a date like "2022-12-31"
-        admin = c(TRUE, FALSE, FALSE),
-        comment = "Simple and secure authentification mechanism
-  for single ‘Shiny’ applications.",
-        stringsAsFactors = FALSE
-)
-
-key_set("R-shinymanager-key", "obiwankenobi")
-
-create_db(
-        credentials_data = credentials,
-        sqlite_path = "database.sqlite", # will be created
-        passphrase = key_get("R-shinymanager-key", "obiwankenobi")
-
-)
+# credentials <- data.frame(
+#         user = c("sus", "direção", "test"), # mandatory
+#         password = c("12345", "12345", "12345"), # mandatory
+#         start = c(NA), # optional (all others)
+#         expire = c(NA, NA, NA), # input a date like "2022-12-31"
+#         admin = c(TRUE, FALSE, FALSE),
+#         comment = "Simple and secure authentification mechanism
+#   for single ‘Shiny’ applications.",
+#         stringsAsFactors = FALSE
+# )
+# 
+# key_set("R-shinymanager-key", "obiwankenobi")
+# 
+# create_db(
+#         credentials_data = credentials,
+#         sqlite_path = "database.sqlite", # will be created
+#         passphrase = key_get("R-shinymanager-key", "obiwankenobi")
+#         #passphrase = "passphrase_wihtout_keyring"
+# 
+# )
 
 
 ## Tabela de atribuições CC e Rubricas
