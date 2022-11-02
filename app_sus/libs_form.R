@@ -35,7 +35,7 @@ create_db(
         credentials_data = credentials,
         sqlite_path = "database.sqlite", # will be created
         passphrase = key_get("R-shinymanager-key", "obiwankenobi")
-        # passphrase = "passphrase_wihtout_keyring"
+
 )
 
 
