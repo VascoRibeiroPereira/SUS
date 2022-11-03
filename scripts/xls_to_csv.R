@@ -7,14 +7,14 @@ xls_to_csv <- function() {
         library(lubridate)
         
         ## Get the file names
-        xls = dir(path = paste0("../", my_year,"/extratos/OriginaisExcel"), pattern = "xls", full.names = TRUE)
+        xls = dir(path = paste0("./", my_year,"/extratos/OriginaisExcel"), pattern = "xls", full.names = TRUE)
         
         ## Copy files to the "extratos" folder
-        file.copy(from=xls, to=paste0("../", my_year,"/extratos"), 
+        file.copy(from=xls, to=paste0("./", my_year,"/extratos"), 
                   overwrite = FALSE, recursive = FALSE, 
                   copy.mode = TRUE)
         
-        setwd(paste0("../", my_year,"/extratos"))
+        setwd(paste0("./", my_year,"/extratos"))
         
         ## Get the file names (again)
         xls = dir(pattern = "xls", full.names = TRUE)
@@ -49,11 +49,11 @@ xls_to_csv <- function() {
                 
                 myTable = myTable[complete.cases(myTable),] %>% tibble()
                 
-                write.csv2(myTable, i)
+                write.csv2(myTable, i, row.names = FALSE)
                 
         }
         
-        setwd("../../scripts")
+        setwd("../../")
 }
 
 

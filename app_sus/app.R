@@ -74,7 +74,7 @@ ui <- dashboardPage(
                   numericInput("rowsHeader", "Número de Linhas no Cabeçalho", value = 0, min = 0),
                   p(""),
                   p(""),
-                  numericInput("nCols", "Número de Colunas", value = 6, min = 1),
+                  numericInput("nCols", "Número de Colunas", value = 5, min = 1),
                 ),
                 
                 box(
