@@ -264,5 +264,9 @@ Nota:
 <td style="text-align: left;">INSTALAÇÕES</td>
 <td style="text-align: left;">ENCARGOS COM COLABORADORES</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">INSTALAÇÕES</td>
+<td style="text-align: left;">IT</td>
+</tr>
 </tbody>
 </table>
