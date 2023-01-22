@@ -5,7 +5,7 @@ title: |
 author: |
         | "Vasco Pereira" - Tesoureiro da SUS
         | "Ricardo Pereira" - Presidente da SUS
-        | sociedadeuniaosintrense@gmail.com
+        | direcao@sociedadeuniaosintrense.pt
 date: " `r as.Date(Sys.Date())` "
 output:
   pdf_document:
@@ -99,10 +99,10 @@ A partir de Maio a Sociedade União Sintrense começou a receber a renda mensal 
 O balanço para o ano de 2022, ou seja, a diferença de saldo entre 01/01/2022 e 31/12/2022 foi de `r contas$SALDO.CONTABILÍSTICO[length(contas$SALDO.CONTABILÍSTICO)] - (contas$SALDO.CONTABILÍSTICO[1]-contas$IMPORTÂNCIA[1])` €.
 
 
-As principais contribuições para o saldo negativo da Sociedade União Sintrense foram:
-- Os primeiros meses de carência por parte da empresa Boundless face às obras de melhoria realisadas na cave.      
-- A fraca contribuição de donativos de porta na Noite das Camélias.
-- A inibição de venda de bebida e comida no bar devido às restrições rugeridas pelo Serviço Nacional de Saúde.
+As principais contribuições para o saldo negativo da Sociedade União Sintrense foram:           
+- Os primeiros meses de carência por parte da empresa Boundless face às obras de melhoria realisadas na cave.                   
+- A fraca contribuição de donativos de porta na Noite das Camélias.             
+- A inibição de venda de bebida e comida no bar devido às restrições rugeridas pelo Serviço Nacional de Saúde.          
 
 Apesar dos contratempos e das dificuldades financeiras é evidente pelo gráfico do Balanço de Atividades em 2022 que o saldo tem uma tendencia positiva, e olhamos para o futuro com positivismo perante a fonte de rendimento estável obtida através do contrato de arrendamento da cave.
 
@@ -346,7 +346,7 @@ Assim é disposto que:
 2. O código é auditável - tendo conhecimentos básicos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
 3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software online de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores. 
 
-Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
+Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [direcao@sociedadeuniaosintrense.pt](direcao@sociedadeuniaosintrense.pt).
 
 
 \pagebreak
