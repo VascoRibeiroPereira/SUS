@@ -9,8 +9,6 @@ merge_my_data <- function() {
         ## Set directory
         setwd(paste0("./", my_year,"/tabelas_por_mes"))
         
-        myfiles = list.files()
-        
         
         df <- list.files() %>% 
                 lapply(read.csv) %>% 

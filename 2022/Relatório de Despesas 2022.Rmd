@@ -1,6 +1,6 @@
 ---
 title: | 
-        | "Relatório de Despesas da Sociedade União Sintrense - 2021"
+        | "Relatório de Despesas da Sociedade União Sintrense - 2022"
         | 
 author: |
         | "Vasco Pereira" - Tesoureiro da SUS
@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 \renewcommand{\linethickness}{0.05em}
 ```
 
+
 ```{r bibliotecas}
 
 # Nome das bibliotecas
@@ -40,21 +41,37 @@ invisible(lapply(packages, library, character.only = TRUE))
 
 ## Introdução
 
-O presente relatório de contas foi gerado por linha de código por programação nos softwares `R 3.6.2` e `R-Studio 1.2.5033`. A utilização destes softwares possibilita uma completa auditoria das contas por parte do conselho fiscal na forma como estas são processadas pela tesouraria. 
+O presente relatório procura espelhar de forma elucidativa o que foi a vida da coletividade no decorrer do ano de 2022 evidenciando os acontecimentos mais relevantes e a expressão que os mesmos representam na gestão anual de uma coletividade.
+Este modelo de relatório é gerado à semelhança dos anos anteriores de forma a permitir uma análise clara, direta e com total transparência entre os elementos que elaboram o documento e os sócios que o analisam.
 
-Assim é disposto que:
+Procura-se que esta análise possa ser sobejamente exemplificativa das boas práticas aplicadas e que as despesas estejam alocadas de forma correta, precisa e com as descriminações corretas.
 
-1. O código é reprodutível - qualquer pessoa com o mesmo software e com o presente documento consegue obter os mesmos valores    
-2. O código é auditável - tendo conhecimentos básicos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
-3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software online de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores.    
+Este relatório constitui uma ferramenta de registo mas, muito além disso, pretende que ele próprio tenha sido criado como uma ferramenta que nos auxiliará no processo de análise e previsão. Dessa forma, mais facilmente poderemos definir quais as linhas financeiras que vão orientar e estabelecer o percurso do exercício de funções do ano seguinte.
 
-No presente documento o código foi escondido para facilitar a leitura do mesmo, mas a versão completa, com código pode ser visualizada na seguinte página: [https://rpubs.com/SUSintrense/relatorio2021](https://rpubs.com/SUSintrense/relatorio2021). Nesta página foi adicionada uma propriedade que torna os gráficos interativos. Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
+Esta análise da totalidade dos documentos contabilísticos procura estar de acordo com as linhas estabelecidas entre a Direção e o Conselho Fiscal de maneira a que possam exprimir de forma verdadeira a atividade financeira da Sociedade União Sintrense no ano de 2022 e a situação patrimonial no final do período correspondente. 
+
+Para uma boa interpretação do presente relatório destaca-se que:                
+1. Valores **negativos** simbolizam **Gasto**.                  
+2. Valores **positivos** simbolizam **Receita**.                
+
+### Estrutura
+
+O Relatório está estruturado da seguinte forma:
+
+1. Apresentação dos Centros de Custo e Rubricas.  
+2. Balanço do saldo ao longo do ano.  
+3. Gasto total e Receita total por Centro de Custo.  
+   3.1. Balanço por Centro de Custo ao longo do ano.  
+5. Gasto mensal e Receita mensal por Centro de Custo.   
+6. Gasto total e Receita total por Rubrica.   
+   6.1. Balanço por Rubrica - comparação ao ano anterior.   
+7. Notas finais e assinaturas.  
 
 \pagebreak
 
 ## Centros de Custo e Rubricas
 
-Na tabela seguinte estão os **Centros de Custo** e as respetivas **Rubricas** aprovadas pela direção para 2021. Estas não sofreram alterações em relação a 2021.
+Na tabela seguinte estão os **Centros de Custo** e as respetivas **Rubricas** aprovadas pela direção para 2022. Estas não sofreram alterações em relação a 2021.
 
 ```{r centros de custo e rubricas}
 
@@ -71,30 +88,35 @@ knitr::kable(ccRubri)
 ```{r importar dados}
 ## Importar dados da Cloud
 
-contas <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2021")
+contas <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2022")
 
 ```
 
-O ano de 2021 continuou a ser atípico, marcado pela falta da principal fonte de rendimento desta coletividade: a renda da cave, e também pelo estado de emergência devido à COVID19 que vivemos há dois anos que nos limita a realização de atividades como o teatro e alugueres de espaço para eventos particulares.
+O ano de 2022 foi marcado pelo regresso da Noite das Camélias depois de 2 anos de interrégnio devido à COVID19. No gráfico de evolução do saldo da Sociedade União Sintrense em função do tempo observa-se um constante decréscimo do saldo devido às preparações para o histórico baile. Não é também de espantar que a afluência não tenha sido suficiente para compensar os gastos deste evento tão acarinhado pelos sintrenses.
 
-Apesar de todas as dificuldades enfrentadas, o saldo do ano 2021 foi positivo. Entre 01/01/2021 e 31/12/2021 a Sociedade União Sintrense viu a sua conta crescer em `r contas$SALDO.CONTABILÍSTICO[length(contas$SALDO.CONTABILÍSTICO)] - (contas$SALDO.CONTABILÍSTICO[1]-contas$IMPORTÂNCIA[1])` €.
+A partir de Maio a Sociedade União Sintrense começou a receber a renda mensal do arrendamento da cave por parte da empresa Boundless, tendo vindo a estabilizar as contas desde então.
+
+O balanço para o ano de 2022, ou seja, a diferença de saldo entre 01/01/2022 e 31/12/2022 foi de `r contas$SALDO.CONTABILÍSTICO[length(contas$SALDO.CONTABILÍSTICO)] - (contas$SALDO.CONTABILÍSTICO[1]-contas$IMPORTÂNCIA[1])` €.
 
 
-As principais contribuições para o saldo positivo da SUS foram:
-- O recente aluguer do espaço da cave à empresa "Boundless".      
-- O apoio por parte da UFS pelas atividades culturais dinamizadas pela SUS através do incansável Teatro União.    
+As principais contribuições para o saldo negativo da Sociedade União Sintrense foram:
+- Os primeiros meses de carência por parte da empresa Boundless face às obras de melhoria realisadas na cave.      
+- A fraca contribuição de donativos de porta na Noite das Camélias.
+- A inibição de venda de bebida e comida no bar devido às restrições rugeridas pelo Serviço Nacional de Saúde.
 
-Apesar dos contratempos e das dificuldades financeiras é evidente pelo gráfico do Balanço de Atividades em 2021 que terminámos o ano de forma positiva, e olhamos para o futuro com positivismo perante a fonte de rendimento estável obtida através do um novo contrato de arrendamento da cave.
+Apesar dos contratempos e das dificuldades financeiras é evidente pelo gráfico do Balanço de Atividades em 2022 que o saldo tem uma tendencia positiva, e olhamos para o futuro com positivismo perante a fonte de rendimento estável obtida através do contrato de arrendamento da cave.
 
 ```{r gráfico evolução balanço, fig.align="center"}
 
-ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
+p <- ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
         theme(plot.title = element_text(hjust = 0.5)) +
         ylab("Saldo (Euros)") +
         xlab("Data") +
-        ggtitle("Balanço 2021") +
+        ggtitle("Balanço 2022") +
         geom_line() + 
         geom_point()
+
+p
 
 ```
 
@@ -149,7 +171,11 @@ knitr::kable(Contas_Anual_Receita)
 grid.arrange(gasto, receita, nrow=1, ncol=2)
 ```
 
-A nível percentual é evidente que as **Instalações** representam a esmagadora maioria dos gastos no entanto, no ano de 2021, houve uma significativa contribuição de receita através de apoios para o **Teatro União** que contribuíram para a sustentabilidade financeira da Sociedade União Sintrense.
+A nível percentual é evidente que as **Instalações** representam a esmagadora maioria dos gastos mas também da receita através das rendas da cave.
+
+É também importante evidenciar a importente contribuição dos nossos **Sócios** através de donativos, que foi mais expressiva durante o ano 2022 do que nos anos anteriores. 
+
+Por fim, o **Teatro União**, apesar das dificuldades associadas à pandemia, continua a dar saldo positivo à Sociedade União Sintrense sendo um perfeito exemplo da sustentabilidade que o presente relatório intenta estudar.
 
 \pagebreak
 
@@ -171,13 +197,15 @@ knitr::kable(Contas_Anual_final)
 
 ```
 
-Desta tabela de balanço podemos concluir que embora, como anteriormente demonstrado, as **Instalações** sejam o **Centro de Custo** com valores mais avultados de lucro são também as que mais produzem gastos, sendo que a receita do **Teatro União** teve um papel fundamental no saldo positivo do ano de 2021.
+A tabela anterior vem reforçar as observações já retiradas dos gráficos de Gasto/Receita. Podemos concluir que, embora como anteriormente demonstrado, as **Instalações** sejam o **Centro de Custo** com valores mais avultados de lucro são também as que mais produzem gastos, sendo que as receitas do **Teatro União** e os donativos de **Sócios** tiveram um papel fundamental no saldo do ano de 2022.
+
+Será interessante continuar a dinamizar as ações que levam os Sócios a quererem ter uma participação mais ativa na vida da Sociedade União Sintrense por forma a subir o valor de donativo. As quotas de sócio, que têm vindo a ser negligenciadas, são uma fonte simbolica mas com muito significado para estes indicadores.
 
 \pagebreak
 
 ## Gasto/Receita por Centro de Custo por Mês
 
-Na seguinte tabela apresentamos o Gasto e a Receita por **Centro de Custo** em cada mês. Neste, tal como nas **Rubricas** demonstrado de seguida, destaca-se o maior movimento de Valores no **Centro de Custo** das **Instalações** como é de esperar, dado que manter um edifício das dimensões da SUS acarreta a muita despesa de manutenção.
+Na seguinte tabela apresentamos a evolução do Gasto e da Receita por **Centro de Custo** em cada mês. Neste, tal como nas **Rubricas** demonstrado de seguida, destaca-se o maior movimento de Valores no **Centro de Custo** das **Instalações** como é de esperar, dado que manter um edifício das dimensões da SUS acarreta a muita despesa de manutenção.
 
 ```{r tabela geral por CC - evolução mensal}
 
@@ -193,23 +221,30 @@ knitr::kable(Balanco_Mês_Label)
 
 ```
 
-Esta tabela permite-nos ainda compreender a importância das atividades do Teatro União para a subsistência da SUS. As transações de Maio e Novembro impactaram positiva e significativamente o **Centro de Custo** do **Teatro**. Adicionalmente, as transações positivas para o **Centro de Custo** das **Instalações** nos meses de Maio e Outubro foram devidas ao pagamento de um seguro devido a danos causados nas intalações por inundação (provocada por agentes externos à SUS), e devido à primeira renda da cave, respetivamente.
+Esta tabela permite-nos ainda compreender a importância das atividades do Teatro União e donativos dos Sócios para a subsistência da Sociedade União Sintrense. As transações de Maio e Outubro impactaram positiva e significativamente o **Centro de Custo** do **Teatro** e **Sócios**. Adicionalmente, as transações positivas para o **Centro de Custo** das **Instalações** nos meses a partir de Maio são devidas às rendas da cave.
 
 \pagebreak
 
-A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreensão da evolução de Gasto e Receita ao longo do ano 2020 de forma gráfica.
+Os gráficos seguintes refletem a evolução Receita-Gasto por mês para os centros de custo mais relevantes ao longo do ano 2022.
 
-Nota-se uma clara quebra de todas as atividades no inicio do ano devido à situação pandémica que vivemos, daí este gráfico ter um significado maior para o **Centro de Custo** das **Instalações** do que dos demais.
+Nota-se claramente quando se inicia o pagamento mensal da renda da cave no **Centro de Custo** das **Instalações**.
 
 ```{r gráfico evolução mensal, fig.align="center", fig.width=10, fig.height=5}
 
-ggplot(Balanco_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) + 
+Balanco_Mês_rel <- Balanco_Mês %>% 
+        filter(CENTRO.DE.CUSTO %in% c("SÓCIOS", "INSTALAÇÕES", "TEATRO UNIÃO"))
+
+m <- ggplot(Balanco_Mês_rel, aes(Mês, Valores)) + 
         theme(plot.title = element_text(hjust = 0.5)) +
         ylab("Valores (Euros)") +
         ggtitle("Evolução de gastos e receita por centro de custo \n com base mensal") +
         guides(color=guide_legend(title="Centro de Custo")) +
         geom_line() + 
-        geom_point() + scale_x_continuous(limits = c(1, 12), breaks = 1:12)
+        geom_point() + scale_x_continuous(limits = c(1, 12), breaks = 1:12) + 
+        geom_hline(yintercept=0, linetype="dashed", color = "red")
+
+
+m + facet_wrap(vars(CENTRO.DE.CUSTO))
 
 ```
 
@@ -217,7 +252,7 @@ ggplot(Balanco_Mês, aes(Mês, Valores, color = CENTRO.DE.CUSTO)) +
 
 ## Gasto/Receita por Rubrica
 
-Na seguinte tabela apresentamos o Gasto e a Receita por **Rubrica** no ano 2021. Destaca-se novamente o centro de custo das **Instalações** em especial os valores de **SEGUROS** pela positiva e o **CONSUMO ELECTRICIDADE** pela negativa.
+Na seguinte tabela apresentamos o Gasto e a Receita por **Rubrica** no ano 2022. Destaca-se novamente o centro de custo das **Instalações** em especial os valores de **Seguros**, **Obras**, **Electricidade** pela negativa. Pela positiva os **Donativos** e **Quotas** de Sócios, a **Renda** e o **Apoio** para o Teatro União.
 
 ```{r tabela geral por rubrica}
 
@@ -229,64 +264,92 @@ knitr::kable(Balanco)
 
 ```
 
-```{r anoAnterior}
+```{r eletricidade}
 
-contas2020 <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2020")
-contas_2020 <- contas2020 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
-Balanco2020 <- contas_2020 %>% summarise(Valores = sum(IMPORTÂNCIA))
-colnames(Balanco2020) <- c("Centro de Custo", "Rubrica", "Valor (euros)")
+contas2021 <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2021")
+contas_2021 <- contas2021 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
+Balanco2021 <- contas_2021 %>% summarise(Valores = sum(IMPORTÂNCIA))
+colnames(Balanco2021) <- c("Centro de Custo", "Rubrica", "Valor (euros)")
 
 ```
 
 
 \pagebreak
 
-### Gasto/Receita por Rubrica - Evolução
+### Balanço por Rubrica - Comparação com ano anterior
 
-A seguinte tabela sumariza a evolução dos gastos e receitas por **Centro de Custo** e por **Rubrica** do ano de 2020 para 2021.
+A seguinte tabela sumariza a evolução dos gastos e receitas por **Centro de Custo** e por **Rubrica** do ano de 2021 para 2022.
 
 ```{r evolucao}
 
-evol <- right_join(Balanco2020, Balanco, by = c("Centro de Custo", "Rubrica"))
-names(evol)[c(3,4)] <- c("Valor (€) 2020", "Valor (€) 2021")
+evol <- right_join(Balanco2021, Balanco, by = c("Centro de Custo", "Rubrica"))
+names(evol)[c(3,4)] <- c("Valor (€) 2021", "Valor (€) 2022")
 
-evol$`Valor (€) 2020`[is.na(evol$`Valor (€) 2020`)] <- 0
+evol$`Valor (€) 2021`[is.na(evol$`Valor (€) 2021`)] <- 0
 
-evol <- evol %>% mutate("Diferença" = - `Valor (€) 2020` + `Valor (€) 2021`)
+evol <- evol %>% mutate("Diferença" = - `Valor (€) 2021` + `Valor (€) 2022`)
 
 knitr::kable(evol)
 
 ```
 
 
-A **Rubrica** cuja evolução negativa se destacou foi a `r paste(evol$"Centro de Custo"[which.min(evol$Diferença)], "-", evol$Rubrica[which.min(evol$Diferença)])` devido à saída do inquilino anterior, e a **Rubrica** com maior evolução positiva foi `r paste(evol$"Centro de Custo"[which.max(evol$Diferença)], "-", evol$Rubrica[which.max(evol$Diferença)])`, pelo apoio da União das Freguesias de Sintra às atividades culturais desenvolvidas pelo Teatro União.
+A **Rubrica** cuja evolução negativa se destacou foi a `r paste(evol$"Centro de Custo"[which.min(evol$Diferença)], "-", evol$Rubrica[which.min(evol$Diferença)])`.
 
-Ainda em relação ao consumo de eletricidade destaca-se uma melhoria quando comparado ao ano de 2020: `r as.numeric(Balanco2020[grep("CONSUMO ELECTRICIDADE", Balanco2020$Rubrica),3])`€ em 2020 contra `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])`€ em 2021, representando uma poupança de `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])-as.numeric(Balanco2020[grep("CONSUMO ELECTRICIDADE", Balanco2020$Rubrica),3])`€.
+A **Rubrica** com maior evolução positiva foi `r paste(evol$"Centro de Custo"[which.max(evol$Diferença)], "-", evol$Rubrica[which.max(evol$Diferença)])`.
 
-\pagebreak
+Ainda em relação ao consumo de eletricidade continua a destacar-se uma melhoria quando comparado ao ano de 2021: `r as.numeric(Balanco2021[grep("CONSUMO ELECTRICIDADE", Balanco2021$Rubrica),3])`€ em 2021 contra `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])`€ em 2022, representando uma poupança de `r as.numeric(Balanco[grep("CONSUMO ELECTRICIDADE", Balanco$Rubrica),3])-as.numeric(Balanco2021[grep("CONSUMO ELECTRICIDADE", Balanco2021$Rubrica),3])`€.
 
-A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreensão da evolução de Gasto e Receita ao longo para cada **Rubrica** e **Centro de Custo** de forma gráfica para 2021.
+A imagem seguinte reflete a tabela anterior possibilitando uma melhor compreensão da evolução de Gasto e Receita para cada **Rubrica** e **Centro de Custo** para 2022.
 
-```{r balanço por Rubrica e CC, fig.align="center", fig.height = 12, fig.width=10}
+```{r balanço por Rubrica e CC, results='hide'}
 
-colnames(Balanco) <- c("CENTRO.DE.CUSTO", "RUBRICA", "Valores")
+library(reticulate)
 
-ggplot(Balanco, aes(RUBRICA, Valores, fill = CENTRO.DE.CUSTO)) + geom_col() + 
-        theme(plot.title = element_text(hjust = 0.5), axis.text.x = element_text(angle = 90, size = 10),
-              axis.ticks.x = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
-              panel.background = element_blank(), axis.line = element_line(colour = "black"), legend.position="right",
-              legend.direction = "vertical") +
-        ylab("Valores (Euros)") +
-        xlab("Rubrica") +
-        ggtitle("Balanço por Rubrica e por Centro de Custo") +
-        guides(color=guide_legend(title="Centro de Custo")) +
-        geom_hline(yintercept = 0, size = .2, color = "grey") +
-        guides(color=guide_legend(title="Centro de Custo"))
+evol$Diferença <- as.numeric(as.character(evol$Diferença))
+
+py_data <- data.frame(evol)
+
+py_data$Centro.de.Custo <- as.factor(py_data$Centro.de.Custo)
+
+py_data$Rubrica <- as.factor(py_data$Rubrica)
+
+py_data <- py_data[order(py_data$Diferença, decreasing = TRUE),]
+
+
+matplotlib <- import("matplotlib")
+matplotlib$pyplot$bar(py_data$Rubrica, py_data$Diferença)
+matplotlib$pyplot$xticks(rotation=90, fontsize = 10)
+matplotlib$pyplot$tight_layout()
+matplotlib$pyplot$ylabel("Diferença (Euros)")
+matplotlib$pyplot$xlabel("Rubrica")
+matplotlib$pyplot$title("Balanço entre 2021 e 2022", y=1.05)
+matplotlib$pyplot$savefig('plot.png', dpi=300, bbox_inches='tight')
+
+```
+
+```{r, fig.align="center"}
+
+knitr::include_graphics("plot.png")
+
 ```
 
 \pagebreak
 
+### Notas finais sobre a execução do relatório de despesas
 
+O presente relatório de contas foi gerado por linha de código por programação nos softwares `R 4.2.1` e `R-Studio 2022.12.0+353`. A utilização destes softwares possibilita uma completa auditoria das contas por parte do conselho fiscal na forma como estas são processadas pela tesouraria. 
+
+Assim é disposto que:
+
+1. O código é reprodutível - qualquer pessoa com o mesmo software e com o presente documento consegue obter os mesmos valores    
+2. O código é auditável - tendo conhecimentos básicos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
+3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software online de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores. 
+
+Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [sociedadeuniaosintrense@gmail.com](sociedadeuniaosintrense@gmail.com).
+
+
+\pagebreak
 
 ## A Direção
 
