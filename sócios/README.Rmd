@@ -1,0 +1,18 @@
+---
+title: "Sócios"
+author: "Vasco Pereira"
+#output: html_document
+output: md_document
+Last update: "Sys.date()"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Controlo de Versões da Lista de Sócios da SUS
+
+```{r centros de custo e rubricas}
+socios <- read.delim("socios.csv", sep = ",")
+knitr::kable(socios)
+```
