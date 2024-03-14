@@ -1,0 +1,323 @@
+---
+title: | 
+        | "Relatório de Despesas da Sociedade União Sintrense - 2023"
+        | 
+author: |
+        | "Vasco Pereira" - Tesoureiro da SUS
+        | "Ricardo Pereira" - Presidente da SUS
+        | direcao@sociedadeuniaosintrense.pt
+date: " `r as.Date(Sys.Date())` "
+output: 
+        html_document:
+                toc: true
+                toc_float: true
+                toc_depth: 3
+                theme: united
+                highlight: breezedark
+                df_print: paged
+                code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      fig.align = "center", message = FALSE, warning = FALSE)
+
+```
+
+
+```{r bibliotecas}
+
+# Nome das bibliotecas
+packages <- c("openxlsx", "dplyr", "ggplot2", "lubridate", "gridExtra", "googlesheets4")
+
+# Instalar bibliotecas que não existam
+installed_packages <- packages %in% rownames(installed.packages())
+if (any(installed_packages == FALSE)) {
+  install.packages(packages[!installed_packages])
+}
+
+# Carregar bibliotecas
+invisible(lapply(packages, library, character.only = TRUE))
+
+```
+
+## Introdução
+
+O presente relatório procura espelhar de forma elucidativa o que foi a vida da coletividade no decorrer do ano de 2023 evidenciando os acontecimentos mais relevantes e a expressão que os mesmos representam na gestão anual de uma coletividade.
+Este modelo de relatório é gerado à semelhança dos anos anteriores de forma a permitir uma análise clara, direta e com total transparência entre os elementos que elaboram o documento e os sócios que o analisam.
+
+Procura-se que esta análise possa ser sobejamente exemplificativa das boas práticas aplicadas e que as despesas estejam alocadas de forma correta, precisa e com as descriminações corretas.
+
+Este relatório constitui uma ferramenta de registo mas, muito além disso, pretende que ele próprio tenha sido criado como uma ferramenta que nos auxiliará no processo de análise e previsão. Dessa forma, mais facilmente poderemos definir quais as linhas financeiras que vão orientar e estabelecer o percurso do exercício de funções do ano seguinte.
+
+Esta análise da totalidade dos documentos contabilísticos procura estar de acordo com as linhas estabelecidas entre a Direção e o Conselho Fiscal de maneira a que possam exprimir de forma verdadeira a atividade financeira da Sociedade União Sintrense no ano de 2023 e a situação patrimonial no final do período correspondente. 
+
+Para uma boa interpretação do presente relatório destaca-se que:                
+1. Valores **negativos** simbolizam **Gasto**.                  
+2. Valores **positivos** simbolizam **Receita**.                
+
+### Estrutura
+
+O Relatório está estruturado da seguinte forma:
+
+1. Apresentação dos Centros de Custo e Rubricas.  
+2. Balanço do saldo ao longo do ano.  
+3. Gasto total e Receita total por Centro de Custo.  
+   3.1. Balanço por Centro de Custo ao longo do ano.  
+5. Gasto mensal e Receita mensal por Centro de Custo.   
+6. Gasto total e Receita total por Rubrica.   
+   6.1. Balanço por Rubrica - comparação ao ano anterior.   
+7. Notas finais e assinaturas.  
+
+\pagebreak
+
+## Centros de Custo e Rubricas
+
+Na tabela seguinte estão os **Centros de Custo** e as respetivas **Rubricas** aprovadas pela direção para 2022. Estas não sofreram alterações em relação a 2021.
+
+```{r centros de custo e rubricas}
+
+ccRubri <- read_sheet("https://docs.google.com/spreadsheets/d/1lV2z3PpiX3VaskRvJS_l5XpBb2Yf7dYlCX4w8i4NlSM/edit?usp=sharing", col_types = "c")
+colnames(ccRubri) <- c("Centro de Custo", "Rubrica")
+knitr::kable(ccRubri)
+
+```
+
+\pagebreak
+
+## Balanço Anual
+
+```{r importar dados}
+## Importar dados da Cloud
+
+contas <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2023")
+
+```
+
+O ano de 2023 foi marcado pelo regresso em pleno da Noite das Camélias depois de 2 anos de interrégnio devido à COVID19 e de um primeiro ano de realização muito atípico e com menos de 200 participantes.
+
+A partir de Maio de 2022 a Sociedade União Sintrense começou a receber a renda mensal do arrendamento da cave por parte da empresa Boundless, tendo vindo a estabilizar as contas desde então, com aumentos sucessivos anuais além da taxa legal em vigor mas segundo informação contratualizada.
+
+O balanço em 2023, ou seja, a diferença de saldo entre 01/01/2023 e 31/12/2023 foi de `r format(contas$SALDO.CONTABILÍSTICO[length(contas$SALDO.CONTABILÍSTICO)] %>% as.numeric() - (contas$SALDO.CONTABILÍSTICO[1] - contas$IMPORTÂNCIA[1]), scientific = FALSE)`€.
+
+
+As principais contribuições para o saldo positivo da Sociedade União Sintrense foram os valores de renda bem como o valor recebido em Janeiro de 2023 (por decisão judicial devido ao incumprimento contratual da empresa de José Azevedo para com os encargos de arrendamento do espaço da cave).
+
+Apesar dos contratempos e das dificuldades financeiras é evidente pelo gráfico do Balanço de Atividades em 2023 que o saldo tem uma tendencia positiva, e olhamos para o futuro com positivismo perante a fonte de rendimento estável obtida através do contrato de arrendamento da cave. Não obstante, sem o valor da decisão judicial o saldo do exercício de funções teria sido negativo, situação que se justifica com os vários pagamentos em atraso que foram efetuados não havendo, neste momento, nenhum valor por regularizar pela Sociedade União Sintrense. Devemos contudo ter esse valor em consideração e atenção para o balanço de 2024.
+
+```{r gráfico evolução balanço, fig.align="center"}
+
+p <- ggplot(contas, aes(DATA.MOV., SALDO.CONTABILÍSTICO)) + 
+        theme(plot.title = element_text(hjust = 0.5)) +
+        ylab("Saldo (Euros)") +
+        xlab("Data") +
+        ggtitle("Balanço 2023") +
+        geom_line() + 
+        geom_point()
+
+p
+
+```
+
+\pagebreak
+
+## Gasto/Receita por Centro de Custo Anual    
+
+```{r gráficos circulares - gastos anuais por CC }
+
+Contas_Anual_Receita <- contas %>% filter(IMPORTÂNCIA > 0) %>% group_by(CENTRO.DE.CUSTO)
+Contas_Anual_Receita <- Contas_Anual_Receita %>% summarise(Valores = sum(IMPORTÂNCIA)) 
+
+Contas_Anual_Gasto <- contas %>% filter(IMPORTÂNCIA < 0) %>% group_by(CENTRO.DE.CUSTO)
+Contas_Anual_Gasto <- Contas_Anual_Gasto %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+receita <- ggplot(Contas_Anual_Receita, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) +
+        geom_bar(stat="identity", width=1, color="white") +
+        ggtitle("Receita Anual por Centro de Custo") +
+        coord_polar("y", start=0) + theme(legend.position="bottom", legend.title=element_blank(), panel.border = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.ticks = element_blank(), 
+          axis.text = element_blank(),
+          legend.direction = "vertical")
+
+gasto <- ggplot(Contas_Anual_Gasto, aes(x="", y=Valores, fill=CENTRO.DE.CUSTO)) +
+        geom_bar(stat="identity", width=1, color="white") +
+        ggtitle("Gasto Anual por Centro de Custo") +
+        coord_polar("y", start=0) + theme(legend.position="bottom", legend.title=element_blank(), panel.border = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank(),
+          panel.background = element_blank(),
+          axis.title = element_blank(),
+          axis.ticks = element_blank(), 
+          axis.text = element_blank(),
+          legend.direction = "vertical")
+```
+
+As seguintes tabelas e respetivos gráficos sumarizam a contribuição de Gastos e de Receitas anual por cada **Centro de Custo**.
+
+```{r tabelas gastos anuais por CC }
+colnames(Contas_Anual_Receita) <- c("Centro de Custo", "Valor (euros)")
+colnames(Contas_Anual_Gasto) <- c("Centro de Custo", "Valor (euros)")
+knitr::kable(Contas_Anual_Gasto)
+knitr::kable(Contas_Anual_Receita)
+```
+
+
+```{r gráficos anuais por CC }
+grid.arrange(gasto, receita, nrow=1, ncol=2)
+```
+
+A nível percentual é evidente que as **Instalações** representam a esmagadora maioria dos gastos mas também da receita através das rendas da cave.
+
+É também importante evidenciar a importante contribuição de donativos por parte da Edilidade, da Junta de Freguesia e de particulares, tendo sido as **Atividades Diversas** o centro de custo com maior destaque dado que os apoios de 2023 não foram especificamente alocados a nenhuma atividade em particular, como em 2022 em que o apoio da Camâra Municipal de Sintra foi para o teatro e o apoio da União das Freguesias de Sintra foi especificamnete para instalações. Desta forma verifica-se uma diferença significativa em centros de custo como o **Teatro União** ainda que nos possamos congratular com o maior valor de bilheteira da última decada.
+
+
+### Balanço dos Centros de Custo
+
+Na seguinte tabela faz-se um balanço anual dos **Centros de Custo**. Valores negativos indicam **Centros de Custo** que terminam o ano com saldo negativo e valores positivos indicam **Centros de Custo** que terminaram o ano com receita.
+
+```{r tabela geral por CC - evolução anual}
+
+Contas_Anual <- contas %>% group_by(CENTRO.DE.CUSTO)
+Contas_Anual <- Contas_Anual %>% summarise(Valores = sum(IMPORTÂNCIA))
+
+totalAnual <- tibble(CENTRO.DE.CUSTO = "**TOTAL**", Valores = sum(Contas_Anual$Valores))
+
+Contas_Anual_final <- bind_rows(Contas_Anual, totalAnual)
+colnames(Contas_Anual_final) <- c("Centro de Custo", "Valor (euros)")
+
+knitr::kable(Contas_Anual_final)
+
+```
+
+A tabela anterior vem reforçar as observações já retiradas dos gráficos de Gasto/Receita. Podemos concluir que, embora como anteriormente demonstrado, as **Instalações** sejam o **Centro de Custo** com valores mais avultados de lucro são também as que mais produzem gastos, sendo que as receitas das **Atividades Diversas** e das **Atividades Contratadas** tiveram um papel fundamental no saldo do ano de 2023.
+
+Será interessante continuar a dinamizar as ações que levam os Sócios a quererem ter uma participação mais ativa na vida da Sociedade União Sintrense por forma a subir o valor de donativo. As quotas de sócio, que têm vindo a ser negligenciadas, são uma fonte simbolica mas com muito significado para estes indicadores.
+
+\pagebreak
+
+## Gasto/Receita por Centro de Custo por Mês
+
+Na seguinte tabela apresentamos a evolução do Gasto e da Receita por **Centro de Custo** em cada mês. Neste, tal como nas **Rubricas** demonstrado de seguida, destaca-se o maior movimento de Valores no **Centro de Custo** das **Instalações** como é de esperar, dado que manter um edifício das dimensões da SUS acarreta a muita despesa de manutenção.
+
+```{r tabela geral por CC - evolução mensal}
+
+Contas_Mês <- contas %>% group_by(CENTRO.DE.CUSTO, Mês)
+Balanco_Mês <- Contas_Mês %>% summarise(Valores = sum(IMPORTÂNCIA)) %>% arrange(Mês)
+Balanco_Mês <- Balanco_Mês[,c(2,1,3)] 
+
+Balanco_Mês_Label <- Balanco_Mês
+Balanco_Mês_Label$Mês <- month(Balanco_Mês_Label$Mês, label = TRUE)
+colnames(Balanco_Mês_Label) <- c("Mês", "Centro de Custo", "Valor (euros)")
+
+knitr::kable(Balanco_Mês_Label)
+
+```
+
+
+
+
+Os gráficos seguintes refletem a evolução Receita-Gasto por mês para os centros de custo mais relevantes ao longo do ano 2023.
+
+
+
+```{r gráfico evolução mensal, fig.align="center", fig.width=10, fig.height=5}
+
+Balanco_Mês_rel <- Balanco_Mês %>% 
+        filter(CENTRO.DE.CUSTO %in% c("INSTALAÇÕES", "BAR", "TEATRO UNIÃO"))
+
+m <- ggplot(Balanco_Mês_rel, aes(Mês, Valores)) + 
+        theme(plot.title = element_text(hjust = 0.5)) +
+        ylab("Valores (Euros)") +
+        ggtitle("Evolução de gastos e receita por centro de custo \n com base mensal") +
+        guides(color=guide_legend(title="Centro de Custo")) +
+        geom_line() + 
+        geom_point() + scale_x_continuous(limits = c(1, 12), breaks = 1:12) + 
+        geom_hline(yintercept=0, linetype="dashed", color = "red")
+
+
+m + facet_wrap(vars(CENTRO.DE.CUSTO))
+
+```
+
+\pagebreak
+
+## Gasto/Receita por Rubrica
+
+Na seguinte tabela apresentamos o Gasto e a Receita por **Rubrica** no ano 2023.   
+
+```{r tabela geral por rubrica}
+
+contas_ <- contas %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
+Balanco <- contas_ %>% summarise(Valores = sum(IMPORTÂNCIA))
+colnames(Balanco) <- c("Centro de Custo", "Rubrica", "Valor (euros)")
+
+knitr::kable(Balanco)
+
+```
+
+```{r eletricidade}
+
+contas2021 <- read_sheet("https://docs.google.com/spreadsheets/d/1av972Q5o1D2vaS3bCkeGvVecbvfRKjOPizJgJlbIQQk/edit?usp=sharing", sheet = "2022")
+contas_2021 <- contas2021 %>% group_by(CENTRO.DE.CUSTO, RUBRICA)
+Balanco2021 <- contas_2021 %>% summarise(Valores = sum(IMPORTÂNCIA))
+colnames(Balanco2021) <- c("Centro de Custo", "Rubrica", "Valor (euros)")
+
+```
+
+
+\pagebreak
+
+### Balanço por Rubrica - Comparação com ano anterior
+
+A seguinte tabela sumariza a evolução dos gastos e receitas por **Centro de Custo** e por **Rubrica** do ano de 2022 para 2023.
+
+```{r evolucao}
+
+evol <- right_join(Balanco2021, Balanco, by = c("Centro de Custo", "Rubrica"))
+names(evol)[c(3,4)] <- c("Valor (€) 2022", "Valor (€) 2023")
+
+evol$`Valor (€) 2022`[is.na(evol$`Valor (€) 2022`)] <- 0
+
+evol <- evol %>% mutate("Diferença" = - `Valor (€) 2022` + `Valor (€) 2023`)
+
+knitr::kable(evol)
+
+```
+
+
+A **Rubrica** cuja evolução negativa se destacou foi a `r paste(evol$"Centro de Custo"[which.min(evol$Diferença)], "-", evol$Rubrica[which.min(evol$Diferença)])`.
+
+A **Rubrica** com maior evolução positiva foi `r paste(evol$"Centro de Custo"[which.max(evol$Diferença)], "-", evol$Rubrica[which.max(evol$Diferença)])`.
+
+
+## Movimentos 2023
+
+```{r tabela completa}
+colnames(contas) <- c("Mês", "Data", "Data", "Descrição", "Valor", "Saldo", "Centro de Custo", "Rubrica")
+
+knitr::kable(contas[,c(-1,-3)], "html") %>%
+  kableExtra::kable_styling(full_width = F)
+
+```
+
+
+\pagebreak
+
+### Notas finais sobre a execução do relatório de despesas
+
+O presente relatório de contas foi gerado por linha de código por programação nos softwares `R 4.2.1` e `R-Studio 2022.12.0+353`. A utilização destes softwares possibilita uma completa auditoria das contas por parte do conselho fiscal na forma como estas são processadas pela tesouraria. 
+
+Assim é disposto que:
+
+1. O código é reprodutível - qualquer pessoa com o mesmo software e com o presente documento consegue obter os mesmos valores    
+2. O código é auditável - tendo conhecimentos básicos de R qualquer pessoa consegue compreender o código e perceber como este funciona (o mesmo acontece com o Excel mas o código deste último está escondido por defeito nas células)    
+3. O código é alvo de controlo de versões - por opção nossa, o código e os dados estão guardados em segurança num software online de controlo de versões `Github`, sendo que cada alteração é alvo de uma justificação e nunca se perdem as versões anteriores. 
+
+Para aceder/consultar a raiz deste projeto pedimos que contacte a direção por [direcao@sociedadeuniaosintrense.pt](direcao@sociedadeuniaosintrense.pt).
+
+
+
